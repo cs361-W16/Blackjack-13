@@ -26,8 +26,12 @@ import com.google.inject.Singleton;
 public class ApplicationController {
 
     public Result index() {
-
         return Results.html();
+    }
+
+    public Result blackjack() {
+
+        return Results.html().template("views/blackjack/blackjack.ftl.html");
 
     }
     

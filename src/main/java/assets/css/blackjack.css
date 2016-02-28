@@ -1,0 +1,60 @@
+body{
+    margin:10px;
+    text-align:center;
+    background: rgba(0,161,0,1);
+    background: -moz-linear-gradient(top, rgba(0,161,0,1) 0%, rgba(46,230,0,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,161,0,1)), color-stop(100%, rgba(46,230,0,1)));
+    background: -webkit-linear-gradient(top, rgba(0,161,0,1) 0%, rgba(46,230,0,1) 100%);
+    background: -o-linear-gradient(top, rgba(0,161,0,1) 0%, rgba(46,230,0,1) 100%);
+    background: -ms-linear-gradient(top, rgba(0,161,0,1) 0%, rgba(46,230,0,1) 100%);
+    background: linear-gradient(to bottom, rgba(0,161,0,1) 0%, rgba(46,230,0,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00a100', endColorstr='#2ee600', GradientType=0 );
+}
+#dealer{
+    margin:auto;
+    padding:3px;
+    background-color:green;
+    height:250px;
+    width:300px;
+    box-shadow: 0 0 10px; #888888;
+    border-radius:10px;
+}
+#dealerCardArea{
+    width:250px;
+    height:200px;
+    border: 5px solid #F5DF00;
+    margin:4 auto;
+    border-radius:3px;
+}
+#divider{
+    width:95%;
+    margin:10 auto;
+    border: 5px solid #F5DF00;
+    border-radius: 10px;
+    background-color:green;
+    height:45px;
+}
+#dividerText{
+    font-size:30px;
+    font-weight:bold;
+    color: #FFFFFF;
+    opacity: .8;
+    letter-spacing: 10px;
+}
+
+#user{
+    margin: 10 auto;
+    padding:3px;
+    width:60%;
+    height:400px;
+    background-color:green;
+    box-shadow: 0 0 10px; #888888;
+    border-radius: 10px;
+}
+#userCardArea{
+    width:250px;
+    height:200px;
+    border: 5px solid #F5DF00;
+    margin:4 auto;
+    border-radius:3px;
+}
