@@ -10,29 +10,51 @@ body{
     background: linear-gradient(to bottom, rgba(0,161,0,1) 0%, rgba(46,230,0,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00a100', endColorstr='#2ee600', GradientType=0 );
 }
+.label1{
+    font-weight:bold;
+    font-size:20pt;
+}
 #dealer{
+    position:relative;
     margin:auto;
     padding:3px;
-    background-color:green;
-    height:250px;
-    width:300px;
-    box-shadow: 0 0 10px; #888888;
+    height:160px;
+    width:500px;
     border-radius:10px;
+    #border: 5px solid #F5DF00;
 }
-#dealerCardArea{
-    width:250px;
-    height:200px;
-    border: 5px solid #F5DF00;
+#dealerCards{
+    display:table;
+    table-layout:fixed;
+    position:relative;
+    width:20%;
     margin:4 auto;
-    border-radius:3px;
+    top:50%;
+    right:25px;
+}
+#dealerCards > div > img{
+    display:block;
+    height:150px;
+    width:100px;
+}
+#dealerCards > div{
+    display:table-cell;
+}
+#dealerBet{
+    position:relative;
+    display:inline-block;
+    bottom:50px;
+    left:41%;
+    border: solid 2px black;
+    padding: 6px;
+    border-radius:6px;
 }
 #divider{
     width:95%;
     margin:10 auto;
-    border: 5px solid #F5DF00;
+    #border: 5px solid #F5DF00;
     border-radius: 10px;
     background-color:green;
-    height:45px;
 }
 #dividerText{
     font-size:30px;
@@ -51,10 +73,40 @@ body{
     box-shadow: 0 0 10px; #888888;
     border-radius: 10px;
 }
+#userMsg{
+    height:40px;
+    font-weight:bold;
+    font-size:20pt;
+}
 #userCardArea{
-    width:250px;
+    width:500px;
     height:200px;
-    border: 5px solid #F5DF00;
+    #border: 5px solid #F5DF00;
     margin:4 auto;
-    border-radius:3px;
+    border-radius:10px;
+}
+#userCards{
+    display:table;
+    table-layout:fixed;
+    position:relative;
+    width:20%;
+    margin:4 auto;
+    top:50%;
+    transform: translateY(-60%);
+    right:25px;
+}
+#userCards > div{
+    display:table-cell;
+}
+#userCards > div > img{
+    display:block;
+    height:150px;
+    width:100px;
+}
+#userCardTotal{
+    transform:translateY(95%);
+    display:inline-block;
+    width:50px;
+    background-color: black;
+    color: white;
 }
