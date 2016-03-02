@@ -18,6 +18,7 @@ package controllers;
 
 import ninja.Result;
 import ninja.Results;
+import models.Game;
 
 import com.google.inject.Singleton;
 
@@ -33,6 +34,14 @@ public class ApplicationController {
 
         return Results.html().template("views/blackjack/blackjack.ftl.html");
 
+    }
+
+    public Result gameGet(){
+        Game g = new Game();
+        g.buildDeck();
+        g.shuffle();
+
+        return Results.json().render(g);
     }
     
     public Result helloWorldJson() {
