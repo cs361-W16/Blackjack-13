@@ -41,6 +41,7 @@ body{
     display:block;
     height:150px;
     width:100px;
+    border-radius:6px;
 }
 #dealerCards > div{
     display:table-cell;
@@ -116,10 +117,10 @@ body{
     color: white;
 }
 #userActions > button{
-    width:50px;
-    height:50px;
-    border-radius:10px;
-    margin: 0px 40px;
+    width:70px;
+    height:70px;
+    border-radius:8px;
+    margin: 0px 30px;
     outline:none;
 }
 #userActions > button:hover{
@@ -128,7 +129,7 @@ body{
 
 #userBank{
     position:relative;
-    right:130px;
+    right:80px;
     height:55px;
     width:120px;
     border: solid 2px;
@@ -144,12 +145,13 @@ body{
 
 #userCurrentBet{
     position:relative;
-    left:120px;
+    left:80px;
     width:120px;
     height:55px;
     border: solid 2px;
     border-radius:10px;
     display:inline-block;
+    margin: 5px 10px;
 }
 #userBet{
     display:block;
