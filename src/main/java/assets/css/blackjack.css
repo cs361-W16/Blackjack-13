@@ -12,19 +12,21 @@ body{
 }
 .label1{
     font-weight:bold;
-    font-size:20pt;
+    font-size:23pt;
 }
 .label2{
-    font-size:20pt;
+    font-size:20px;
+    font-weight:bold;
 }
 #dealer{
     position:relative;
     margin:auto;
     padding:3px;
-    height:160px;
-    width:500px;
+    width:520px;
     border-radius:10px;
     #border: 5px solid #F5DF00;
+    background-color:green;
+    box-shadow: 0 0 10px; #888888;
 }
 #dealerCards{
     display:table;
@@ -44,13 +46,13 @@ body{
     display:table-cell;
 }
 #dealerBet{
-    position:relative;
+    #position:relative;
     display:inline-block;
-    bottom:70px;
-    left:41%;
-    border: solid 2px black;
-    padding: 6px;
+    height:50px;
+    width:120px;
+    border: solid 2px;
     border-radius:6px;
+    margin:5px;
 }
 #divider{
     width:95%;
@@ -70,7 +72,7 @@ body{
 #user{
     margin: 10 auto;
     padding:3px;
-    width:60%;
+    width:520px;
     #height:400px;
     background-color:green;
     box-shadow: 0 0 10px; #888888;
@@ -117,9 +119,88 @@ body{
     width:50px;
     height:50px;
     border-radius:10px;
+    margin: 0px 40px;
+    outline:none;
+}
+#userActions > button:hover{
+    cursor:hand;
+}
+
+#userBank{
+    position:relative;
+    right:130px;
+    height:55px;
+    width:120px;
+    border: solid 2px;
+    display:inline-block;
+    border-radius:10px;
+    margin: 5px 10px;
+}
+#userMoney{
+    display:block;
+    #font-weight:bold;
+    font-size:20px;
+}
+
+#userCurrentBet{
+    position:relative;
+    left:120px;
+    width:120px;
+    height:55px;
+    border: solid 2px;
+    border-radius:10px;
+    display:inline-block;
+}
+#userBet{
+    display:block;
+    #font-weight:bold;
+    font-size:20px;
+}
+
+
+#userBetButtons > label{
+    display:block;
+    font-weight:bold;
 }
 #userBetButtons > button{
-    width:50px;
-    height:50px;
-    border-radius:10px;
+    width:70px;
+    height:70px;
+    border-radius:35px;
+    font-weight:bold;
+    margin:5px 10px;
+    border: dotted 3px;
+    box-shadow: 4px 4px 5px #000000;
+    cursor: hand;
+    outline:none;
+}
+
+#userBetButtons > button:hover{
+    box-shadow: 2px 2px 5px #000000;
+}
+#userBetButtons > button:active{
+    box-shadow:none;
+}
+
+#bet1{
+    background-color:white;
+    color:black;
+}
+#bet5{
+    background-color:#DF0F0F;
+    color:black;
+}
+#bet10{
+    background-color:green;
+    color:black;
+}
+#bet25{
+    background-color:#001EDC;
+    color:white;
+}
+#bet50{
+    background-color: black;
+    color:white;
+}
+userBetButtons{
+
 }
