@@ -19,7 +19,7 @@ body{
     font-weight:bold;
 }
 #dealer{
-    position:relative;
+    height:240px;
     margin:auto;
     padding:3px;
     width:520px;
@@ -47,13 +47,11 @@ body{
     display:table-cell;
 }
 #dealerBet{
-    #position:relative;
-    display:inline-block;
     height:50px;
     width:120px;
     border: solid 2px;
     border-radius:6px;
-    margin:5px;
+    margin:5px auto;
 }
 #divider{
     width:95%;
@@ -85,11 +83,7 @@ body{
     font-size:20pt;
 }
 #userCardArea{
-    width:500px;
     height:200px;
-    #border: 5px solid #F5DF00;
-    margin:4 auto;
-    border-radius:10px;
 }
 #userCards{
     display:table;
@@ -202,7 +196,4 @@ body{
 #bet50{
     background-color: black;
     color:white;
-}
-userBetButtons{
-
 }
