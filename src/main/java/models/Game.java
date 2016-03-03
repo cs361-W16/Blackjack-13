@@ -34,30 +34,20 @@ public class Game {
         Collections.shuffle(deck, new Random(seed));
     }
 
-    //gets the top card from a list
-    public Card getTop(java.util.List<Card> l) {
-        return l.get(l.size()-1);
-    }
-
-    //removes the top card from a list
-    public void removeTop(java.util.List<Card> l) {
-        l.remove(l.size()-1);
+    //removes the top card from a list and returns it
+    public Card removeTop(java.util.List<Card> l) {
+        return l.remove(l.size()-1);
     }
 
     //takes a card from the deck and puts it into a hand
     public void deal(java.util.List<Card> hand) {
-        hand.add(getTop(deck));
-        removeTop(deck);
+        hand.add(removeTop(deck));
     }
 
     //empties the hand and puts all of the cards back into the deck
     public void emptyHand(java.util.List<Card> hand) {
-        while(hand.size() > 0){
-            Card c = getTop(hand);
-            removeTop(hand);
-
-            deck.add(c);
-        }
+        while(hand.size() > 0)
+            deck.add(removeTop(hand));
     }
 }
 
