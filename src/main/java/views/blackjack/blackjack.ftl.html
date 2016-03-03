@@ -2,6 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/assets/css/blackjack.css">
+    <script type="text/javascript" src="/assets/webjars/jquery/2.1.3/jquery.js"></script>
     <title>Blackjack</title>
 </head>
 <body>
@@ -64,6 +65,21 @@
         </div>
     </div>
 </div>
+
+<script>
+
+var game;
+
+function display(game){
+    console.log(game);
+}
+
+$.getJSON("http://localhost:8080/game", function( data ) {
+    display(data);
+    game = data;
+});
+
+</script>
 
 </body>
 </html>
