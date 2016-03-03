@@ -18,9 +18,11 @@ package controllers;
 
 import ninja.Result;
 import ninja.Results;
+import ninja.Context;
 import models.Game;
 
 import com.google.inject.Singleton;
+import ninja.params.PathParam;
 
 
 @Singleton
@@ -42,6 +44,11 @@ public class ApplicationController {
         g.shuffle();
 
         return Results.json().render(g);
+    }
+
+    public Result betPost(Context context, @PathParam("amount") int amount, Game g){
+        g.tryBet(amount);
+        return  Results.json().render(g);
     }
     
     public Result helloWorldJson() {
