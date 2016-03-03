@@ -83,6 +83,7 @@ public class Game {
         return -1; //error
     }
 
+    //counts all of the cards in the hand and gets as close to 21 as possible
     public int countCards(java.util.List<Card> hand) {
         int count = 0;
         int numAces = 0;
