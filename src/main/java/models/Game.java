@@ -16,10 +16,12 @@ public class Game {
     public int     pBank = 100;
     public int     pBet = 0;
     public boolean betError = false;
+    public int     pCCount = 0; //player card count
 
     public java.util.List<Card> dHand = new ArrayList<>();
     //don't really need a dBet or dBank for now
     //dealer will match so it is just printing/using pBet for the dealer
+    public int     dCCount = 0; //dealer card count
 
     public Game(){
     }
@@ -66,6 +68,38 @@ public class Game {
         pBank -= amount;
         pBet  += amount;
         betError = false;
+    }
+
+    //turns a cards rank into a blackjack value
+    public int generateVal(Card c) {
+        int rank = c.getValue();
+        if(rank >= 2 && rank <= 10)
+            return rank; //2-10
+        else if(rank >= 11 && rank <= 13)
+            return 10; //J,Q,K
+        else if(rank == 1)
+            return 11; //A
+
+        return -1; //error
+    }
+
+    public int countCards(java.util.List<Card> hand) {
+        int count = 0;
+        int numAces = 0;
+
+        for(int i = 0; i < hand.size(); ++i){
+            int val = generateVal(hand.get(i));
+            if(val == 11)
+                numAces++;
+            count += val;
+        }
+
+        while(count > 21 && numAces > 0){
+            count -= 10; //count-11+1 which turns Ace into a 1
+            numAces--;
+        }
+
+        return count;
     }
 }
 
