@@ -53,4 +53,19 @@ public class testGame {
         assertEquals(0,g.pHand.size());
         assertEquals(52,g.deck.size());
     }
+
+    @Test
+    public void testTryBet(){
+        Game g = new Game();
+
+        g.tryBet(101);
+        assertEquals(true,g.betError);
+        assertEquals(0,g.pBet);
+        assertEquals(100,g.pBank);
+
+        g.tryBet(5);
+        assertEquals(false,g.betError);
+        assertEquals(5,g.pBet);
+        assertEquals(95,g.pBank);
+    }
 }
