@@ -11,6 +11,10 @@ public class Game {
 
     public java.util.List<Card> deck = new ArrayList<>();
 
+    //pHand is the players hand and dHand is the dealers hand
+    public java.util.List<Card> pHand = new ArrayList<>();
+    public java.util.List<Card> dHand = new ArrayList<>();
+
 
     public Game(){
     }
@@ -28,6 +32,32 @@ public class Game {
     public void shuffle() {
         long seed = System.nanoTime();
         Collections.shuffle(deck, new Random(seed));
+    }
+
+    //gets the top card from a list
+    public Card getTop(java.util.List<Card> l) {
+        return l.get(l.size()-1);
+    }
+
+    //removes the top card from a list
+    public void removeTop(java.util.List<Card> l) {
+        l.remove(l.size()-1);
+    }
+
+    //takes a card from the deck and puts it into a hand
+    public void deal(java.util.List<Card> hand) {
+        hand.add(getTop(deck));
+        removeTop(deck);
+    }
+
+    //empties the hand and puts all of the cards back into the deck
+    public void emptyHand(java.util.List<Card> hand) {
+        while(hand.size() > 0){
+            Card c = getTop(hand);
+            removeTop(hand);
+
+            deck.add(c);
+        }
     }
 }
 
