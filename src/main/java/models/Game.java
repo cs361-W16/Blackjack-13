@@ -13,8 +13,13 @@ public class Game {
 
     //pHand is the players hand and dHand is the dealers hand
     public java.util.List<Card> pHand = new ArrayList<>();
-    public java.util.List<Card> dHand = new ArrayList<>();
+    public int     pBank = 100;
+    public int     pBet = 0;
+    public boolean betError = false;
 
+    public java.util.List<Card> dHand = new ArrayList<>();
+    //don't really need a dBet or dBank for now
+    //dealer will match so it is just printing/using pBet for the dealer
 
     public Game(){
     }
@@ -48,6 +53,19 @@ public class Game {
     public void emptyHand(java.util.List<Card> hand) {
         while(hand.size() > 0)
             deck.add(removeTop(hand));
+    }
+
+    //will try to bet for the player
+    //sets betError to true if it failed, false if it succeeded
+    public void tryBet(int amount) {
+        if(amount > pBank){
+            betError = true;
+            return;
+        }
+
+        pBank -= amount;
+        pBet  += amount;
+        betError = false;
     }
 }
 
