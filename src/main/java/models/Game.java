@@ -46,9 +46,10 @@ public class Game {
         return l.remove(l.size()-1);
     }
 
-    //takes a card from the deck and puts it into a hand
-    public void deal(java.util.List<Card> hand) {
-        hand.add(removeTop(deck));
+    //takes a number of cards from the deck and puts it into a hand
+    public void deal(java.util.List<Card> hand, int numCards) {
+        for(int i = 0; i < numCards; ++i)
+            hand.add(removeTop(deck));
     }
 
     //empties the hand and puts all of the cards back into the deck
