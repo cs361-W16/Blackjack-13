@@ -45,14 +45,14 @@
     </div>
 
     <div id="userBettingArea">
-        <div id="userMoney">
+        <div id="userMoneyDiv">
             <div id="userBank">
                 <label class="label2">Bank</label>
                 <label class="label2" id="userMoney">$100</label>
             </div>
             <div id="userCurrentBet">
                 <label class="label2">Bet</label>
-                <label class="label2" id="userBet">$0</label>
+                <label class="label2" id="userBetAmount">$0</label>
             </div>
         </div>
         <div id="userBetButtons">
@@ -69,16 +69,57 @@
 <script>
 
 var game;
-
-function display(game){
-    console.log(game);
-}
-
 $.getJSON("http://localhost:8080/game", function( data ) {
     display(data);
     game = data;
 });
 
+function display(game){
+    console.log(game);
+    if(game.betError == true){
+       alert("You cannot bet more than you have in the bank");
+    } else{
+       $("#userMoney").html("$" + game.pBank.toString());
+       $("#userBetAmount").html("$" + game.pBet.toString());
+       $("#dealerBetAmount").html("$" + game.pBet.toString());
+    }
+
+}
+
+
+//Bet button clicks:
+$("#userBetButtons > button").click(function(){
+    bet = "";
+    switch(this.id){
+        case "bet1":
+            bet = "1";
+            break;
+        case "bet5":
+            bet = "5";
+            break;
+        case "bet10":
+            bet = "10";
+            break;
+        case "bet25":
+            bet = "25";
+            break;
+        case "bet50":
+            bet = "50";
+            break;
+    }
+    $.ajax({
+        type: "POST",
+        url: "/bet/" + bet,
+        data: JSON.stringify(game),
+        success: function(data, status){
+        console.log("Data: " + data + "\nStatus: " + status);
+        display(data);
+        game = data;},
+        contentType:"application/json; charset=utf-8",
+        dataType:"json",
+     });
+
+});
 </script>
 
 </body>

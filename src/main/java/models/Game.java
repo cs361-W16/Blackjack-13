@@ -64,7 +64,6 @@ public class Game {
             betError = true;
             return;
         }
-
         pBank -= amount;
         pBet  += amount;
         betError = false;
