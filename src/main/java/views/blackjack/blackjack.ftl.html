@@ -57,11 +57,11 @@
         </div>
         <div id="userBetButtons">
             <label class="label2">Bet</label>
-            <button id="bet1">1</button>
-            <button id="bet5">5</button>
-            <button id="bet10">10</button>
-            <button id="bet25">25</button>
-            <button id="bet50">50</button>
+            <button id="bet1" onclick="userBetFun(1)">1</button>
+            <button id="bet5" onclick="userBetFun(5)">5</button>
+            <button id="bet10" onclick="userBetFun(10)">10</button>
+            <button id="bet25" onclick="userBetFun(25)">25</button>
+            <button id="bet50" onclick="userBetFun(50)">50</button>
         </div>
     </div>
 </div>
@@ -89,25 +89,7 @@ function display(game){
 
 
 //Bet button clicks:
-$("#userBetButtons > button").click(function(){
-    bet = "";
-    switch(this.id){
-        case "bet1":
-            bet = "1";
-            break;
-        case "bet5":
-            bet = "5";
-            break;
-        case "bet10":
-            bet = "10";
-            break;
-        case "bet25":
-            bet = "25";
-            break;
-        case "bet50":
-            bet = "50";
-            break;
-    }
+function userBetFun(bet){
     //Send game data to /bet/{amount}
     $.ajax({
         type: "POST",
@@ -122,7 +104,7 @@ $("#userBetButtons > button").click(function(){
         dataType:"json",
      });
 
-});
+}
 </script>
 
 </body>
