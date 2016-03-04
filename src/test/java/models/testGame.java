@@ -34,11 +34,14 @@ public class testGame {
     public void testDeal(){
         Game g = new Game();
         g.buildDeck();
-        g.deal(g.pHand);
+        g.deal(g.pHand,1);
         assertEquals(1,g.pHand.size());
         assertEquals(13,g.pHand.get(0).getValue());
         assertEquals(Suit.Spades,g.pHand.get(0).getSuit());
         assertEquals(51,g.deck.size());
+
+        g.deal(g.pHand,5);
+        assertEquals(6,g.pHand.size());
     }
 
     @Test
@@ -46,8 +49,7 @@ public class testGame {
         Game g = new Game();
         g.buildDeck();
 
-        for(int i = 0; i < 4; ++i)
-            g.deal(g.pHand);
+        g.deal(g.pHand,4);
 
         g.emptyHand(g.pHand);
         assertEquals(0,g.pHand.size());
