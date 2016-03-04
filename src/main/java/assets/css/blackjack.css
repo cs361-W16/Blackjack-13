@@ -120,6 +120,9 @@ body{
 #userActions > button:hover{
     cursor:hand;
 }
+#userMoneyDiv{
+    margin:15px;
+}
 
 #userBank{
     position:relative;
@@ -129,7 +132,6 @@ body{
     border: solid 2px;
     display:inline-block;
     border-radius:10px;
-    margin: 5px 10px;
 }
 #userMoney{
     display:block;
@@ -145,7 +147,6 @@ body{
     border: solid 2px;
     border-radius:10px;
     display:inline-block;
-    margin: 5px 10px;
 }
 #userBet{
     display:block;
