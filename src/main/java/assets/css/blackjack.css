@@ -152,7 +152,10 @@ body{
     #font-weight:bold;
     font-size:20px;
 }
-
+#userBetAmount{
+    display:block;
+    font-size:20px;
+}
 
 #userBetButtons > label{
     display:block;
