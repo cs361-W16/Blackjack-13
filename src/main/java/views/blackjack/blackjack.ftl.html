@@ -76,6 +76,7 @@ $.getJSON("http://localhost:8080/game", function( data ) {
 
 function display(game){
     console.log(game);
+    //First try to update bets
     if(game.betError == true){
        alert("You cannot bet more than you have in the bank");
     } else{
@@ -107,12 +108,14 @@ $("#userBetButtons > button").click(function(){
             bet = "50";
             break;
     }
+    //Send game data to /bet/{amount}
     $.ajax({
         type: "POST",
         url: "/bet/" + bet,
         data: JSON.stringify(game),
         success: function(data, status){
         console.log("Data: " + data + "\nStatus: " + status);
+        //Display game data
         display(data);
         game = data;},
         contentType:"application/json; charset=utf-8",
