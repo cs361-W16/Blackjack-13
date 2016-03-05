@@ -18,14 +18,15 @@ public class testGame {
     @Test
     public void testGameBuildDeck(){
         Game g = new Game();
-        g.buildDeck();
-        assertEquals(52,g.deck.size());
+        g.buildDeck(3);
+        //52*3=156 cards for 3 decks
+        assertEquals(156,g.deck.size());
     }
 
     @Test
     public void testGameInit(){
         Game g = new Game();
-        g.buildDeck();
+        g.buildDeck(1);
         g.shuffle();
         assertNotEquals(1,g.deck.get(0).getValue());
     }
@@ -33,7 +34,7 @@ public class testGame {
     @Test
     public void testDeal(){
         Game g = new Game();
-        g.buildDeck();
+        g.buildDeck(1);
         g.deal(g.pHand,1);
         assertEquals(1,g.pHand.size());
         assertEquals(13,g.pHand.get(0).getValue());
@@ -47,7 +48,7 @@ public class testGame {
     @Test
     public void testEmptyHand(){
         Game g = new Game();
-        g.buildDeck();
+        g.buildDeck(1);
 
         g.deal(g.pHand,4);
 
