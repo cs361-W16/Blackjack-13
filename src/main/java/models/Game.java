@@ -27,12 +27,15 @@ public class Game {
     }
 
     //Ranks go from 1 to 13. Aces are 1 and Kings are 13.
-    public void buildDeck() {
-        for(int i = 1; i < 14; i++){
-            deck.add(new Card(i,Suit.Clubs));
-            deck.add(new Card(i,Suit.Hearts));
-            deck.add(new Card(i,Suit.Diamonds));
-            deck.add(new Card(i,Suit.Spades));
+    //adds the number of decks to the game
+    public void buildDeck(int numDecks) {
+        for(int i = 0; i < numDecks; ++i) {
+            for (int j = 1; j < 14; ++j) {
+                deck.add(new Card(j, Suit.Clubs));
+                deck.add(new Card(j, Suit.Hearts));
+                deck.add(new Card(j, Suit.Diamonds));
+                deck.add(new Card(j, Suit.Spades));
+            }
         }
     }
 
