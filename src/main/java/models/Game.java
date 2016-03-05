@@ -74,6 +74,8 @@ public class Game {
         betError = false;
     }
 
+    //will try to deal 2 cards to the player if their bets are >=2
+    //sets stillBet to true if it failed, false if it succeeded
     public void tryDeal() {
         if(pBet < 2){
             stillBet = true;
