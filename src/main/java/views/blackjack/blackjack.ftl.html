@@ -41,45 +41,33 @@
     <div id="userActions">
         <button id="dealHit">Deal</button>
         <button id="split" hidden="true">Split</button>
+        <button id="doubleDown" hidden="true">Double Down</button>
         <button id="stand">Stand</button>
     </div>
 
     <div id="userBettingArea">
-        <div id="userMoney">
+        <div id="userMoneyDiv">
             <div id="userBank">
                 <label class="label2">Bank</label>
                 <label class="label2" id="userMoney">$100</label>
             </div>
             <div id="userCurrentBet">
                 <label class="label2">Bet</label>
-                <label class="label2" id="userBet">$0</label>
+                <label class="label2" id="userBetAmount">$0</label>
             </div>
         </div>
         <div id="userBetButtons">
             <label class="label2">Bet</label>
-            <button id="bet1">1</button>
-            <button id="bet5">5</button>
-            <button id="bet10">10</button>
-            <button id="bet25">25</button>
-            <button id="bet50">50</button>
+            <button id="bet1" onclick="userBetFun(1)">1</button>
+            <button id="bet5" onclick="userBetFun(5)">5</button>
+            <button id="bet10" onclick="userBetFun(10)">10</button>
+            <button id="bet25" onclick="userBetFun(25)">25</button>
+            <button id="bet50" onclick="userBetFun(50)">50</button>
         </div>
     </div>
 </div>
+<script type="text/javascript" src="/assets/javascript/blackjack.js"></script>
 
-<script>
-
-var game;
-
-function display(game){
-    console.log(game);
-}
-
-$.getJSON("http://localhost:8080/game", function( data ) {
-    display(data);
-    game = data;
-});
-
-</script>
 
 </body>
 </html>
