@@ -85,6 +85,29 @@ public class testGame {
         g.tryDeal();
         assertEquals(false,g.stillBet);
         assertEquals(2,g.pHand.size());
+
+        g.tryBet(3);
+        g.tryDeal();
+        assertEquals(false,g.stillBet);
+        assertEquals(2,g.pHand.size());
+    }
+
+    @Test
+    public void testTryHit(){
+        Game g = new Game();
+        g.buildDeck(3);
+
+        g.tryHit();
+        assertEquals(false,g.hasHit);
+
+        g.tryBet(3);
+        g.tryHit();
+        assertEquals(false,g.hasHit);
+
+        g.tryDeal();
+        g.tryHit();
+        assertEquals(true,g.hasHit);
+        assertEquals(3,g.pHand.size());
     }
 
     @Test
@@ -102,6 +125,19 @@ public class testGame {
 
         int t4 = g.generateVal(new Card(14,Suit.Spades));
         assertEquals(-1,t4);
+    }
+
+    @Test
+    public void testNewHand(){
+        Game g = new Game();
+        g.buildDeck(3);
+        g.pCCount = 23;
+        g.bust = true;
+        g.tryBet(10);
+        g.newHand();
+        assertEquals(false, g.bust);
+        assertEquals(0, g.pCCount);
+        assertEquals(0,g.pBet);
     }
 
     @Test
