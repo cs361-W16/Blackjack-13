@@ -25,6 +25,7 @@ public class Game {
     public int     dCCount = 0; //dealer card count
 
     public boolean gameOver = false;
+    public boolean playerWins = false;
 
     public Game(){
     }
