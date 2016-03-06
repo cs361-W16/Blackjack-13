@@ -10,10 +10,9 @@
 <div id="dealer">
     <div id="dealerCardArea">
         <div id="dealerCards">
-            <div><img src="/assets/cards/cardback.png"></div>
-            <div><img src="/assets/cards/cardback.png"></div>
         </div>
     </div>
+    <div id="dealerCardTotal"></div>
     <div id="dealerBet">
         <label class="label2">Dealer Bet</label><br>
         <label class="label2" id="dealerBetAmount">$0</label>
@@ -32,17 +31,17 @@
 
     <div id="userCardArea">
         <div id="userCards">
-            <div><img src="/assets/cards/cardback.png"></div>
-            <div><img src="/assets/cards/cardback.png"></div>
         </div>
         <div id="userCardTotal"></div>
     </div>
 
     <div id="userActions">
-        <button id="dealHit">Deal</button>
-        <button id="split" hidden="true">Split</button>
-        <button id="doubleDown" hidden="true">Double Down</button>
+        <button id="playAgain" disabled="true">Play Again</button>
+        <button id="deal">Deal</button>
+        <button id="hit" disabled="true">Hit</button>
         <button id="stand">Stand</button>
+        <button id="split" disabled="true">Split</button>
+        <button id="doubleDown" disabled="true">Double Down</button>
     </div>
 
     <div id="userBettingArea">

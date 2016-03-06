@@ -18,22 +18,50 @@ public class Game {
     public boolean betError = false;
     public int     pCCount = 0; //player card count
     public boolean stillBet  = true;
+    public boolean hasHit = false;
+    public boolean handOver = false;
+    public boolean bust = false;
+    public boolean canSplit = false;
+    public boolean hasSplit = false;
+    public boolean dealerBust = false;
+    public boolean playerWin = false;
 
     public java.util.List<Card> dHand = new ArrayList<>();
-    //don't really need a dBet or dBank for now
-    //dealer will match so it is just printing/using pBet for the dealer
     public int     dCCount = 0; //dealer card count
 
     public Game(){
     }
 
     //Ranks go from 1 to 13. Aces are 1 and Kings are 13.
-    public void buildDeck() {
-        for(int i = 1; i < 14; i++){
-            deck.add(new Card(i,Suit.Clubs));
-            deck.add(new Card(i,Suit.Hearts));
-            deck.add(new Card(i,Suit.Diamonds));
-            deck.add(new Card(i,Suit.Spades));
+    public void buildDeck(int numDecks) {
+        for(int j=0;j<numDecks;j++) {
+            for (int i = 1; i < 14; i++) {
+                deck.add(new Card(i, Suit.Clubs));
+                deck.add(new Card(i, Suit.Hearts));
+                deck.add(new Card(i, Suit.Diamonds));
+                deck.add(new Card(i, Suit.Spades));
+            }
+        }
+    }
+
+    public void dealerTurn(){
+        deal(dHand, 2);
+        while(countCards(dHand) < 17){
+            deal(dHand, 1);
+        }
+        dCCount = countCards(dHand);
+        if(dCCount > 21){
+            dealerBust = true;
+            playerWin = true;
+            handOver = true;
+            pBet = 0;
+        } else if(dCCount > pCCount){
+            handOver = true;
+            playerWin = false;
+        } else{
+            handOver = true;
+            playerWin = true;
+            pBank += pBet *=2;
         }
     }
 
@@ -72,7 +100,7 @@ public class Game {
     }
 
     //will try to deal 2 cards to the player if their bets are >=2
-    //sets stillBet to true if it failed, false if it succeeded
+    //keeps stillBet true if it failed, sets to false if it succeeded
     public void tryDeal() {
         if(pBet < 2){
             return;
@@ -81,6 +109,9 @@ public class Game {
         }else{
             deal(pHand, 2);
             pCCount = countCards(pHand);
+            if(pHand.get(0).getValue() == pHand.get(1).getValue()){
+                canSplit = true;
+            }
             stillBet = false;
         }
     }
@@ -116,6 +147,49 @@ public class Game {
         }
 
         return count;
+    }
+    public void tryHit(){
+        if((!stillBet) && (!handOver) ){
+            pHand.add(removeTop(deck));
+            hasHit = true;
+            pCCount = countCards(pHand);
+            if (pCCount > 21){
+                bust = true;
+                handOver = true;
+                pBet = 0;
+            }
+        }else{
+            return;
+        }
+    }
+
+    public void doubleDown(){
+        pBet *= 2;
+        deal(pHand, 1);
+        pCCount = countCards(pHand);
+        if(pCCount > 21){
+            bust = true;
+        } else {
+            dealerTurn();
+        }
+    }
+
+    //Resets all variables except money and deck
+    public void newHand(){
+        pBet = 0;
+        betError = false;
+        pCCount = 0;
+        dCCount = 0;
+        stillBet  = true;
+        hasHit = false;
+        handOver = false;
+        bust = false;
+        canSplit = false;
+        hasSplit = false;
+        dealerBust = false;
+        playerWin = false;
+        emptyHand(pHand);
+        emptyHand(dHand);
     }
 }
 

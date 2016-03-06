@@ -18,14 +18,14 @@ public class testGame {
     @Test
     public void testGameBuildDeck(){
         Game g = new Game();
-        g.buildDeck();
+        g.buildDeck(1);
         assertEquals(52,g.deck.size());
     }
 
     @Test
     public void testGameInit(){
         Game g = new Game();
-        g.buildDeck();
+        g.buildDeck(3);
         g.shuffle();
         assertNotEquals(1,g.deck.get(0).getValue());
     }
@@ -33,7 +33,7 @@ public class testGame {
     @Test
     public void testDeal(){
         Game g = new Game();
-        g.buildDeck();
+        g.buildDeck(1);
         g.deal(g.pHand,1);
         assertEquals(1,g.pHand.size());
         assertEquals(13,g.pHand.get(0).getValue());
@@ -47,7 +47,7 @@ public class testGame {
     @Test
     public void testEmptyHand(){
         Game g = new Game();
-        g.buildDeck();
+        g.buildDeck(1);
 
         g.deal(g.pHand,4);
 
@@ -92,6 +92,24 @@ public class testGame {
     }
 
     @Test
+    public void testTryHit(){
+        Game g = new Game();
+        g.buildDeck(3);
+
+        g.tryHit();
+        assertEquals(false,g.hasHit);
+
+        g.tryBet(3);
+        g.tryHit();
+        assertEquals(false,g.hasHit);
+
+        g.tryDeal();
+        g.tryHit();
+        assertEquals(true,g.hasHit);
+        assertEquals(3,g.pHand.size());
+    }
+
+    @Test
     public void testGenerateVal(){
         Game g = new Game();
 
@@ -106,6 +124,19 @@ public class testGame {
 
         int t4 = g.generateVal(new Card(14,Suit.Spades));
         assertEquals(-1,t4);
+    }
+
+    @Test
+    public void testNewHand(){
+        Game g = new Game();
+        g.buildDeck(3);
+        g.pCCount = 23;
+        g.bust = true;
+        g.tryBet(10);
+        g.newHand();
+        assertEquals(false, g.bust);
+        assertEquals(0, g.pCCount);
+        assertEquals(0,g.pBet);
     }
 
     @Test
