@@ -48,7 +48,20 @@ public class ApplicationController {
 
     public Result betPost(Context context, @PathParam("amount") int amount, Game g){
         g.tryBet(amount);
-        return  Results.json().render(g);
+
+        return Results.json().render(g);
+    }
+
+    public Result hitPost(Context context, Game g){
+        g.tryHit();
+
+        return Results.json().render(g);
+    }
+
+    public Result playerLostPost(Context context, Game g){
+        g.playerLost();
+
+        return Results.json().render(g);
     }
     
     public Result helloWorldJson() {

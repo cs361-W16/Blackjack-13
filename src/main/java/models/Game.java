@@ -24,6 +24,9 @@ public class Game {
     //dealer will match so it is just printing/using pBet for the dealer
     public int     dCCount = 0; //dealer card count
 
+    public boolean gameOver = false;
+    public boolean playerWins = false;
+
     public Game(){
     }
 
@@ -50,7 +53,7 @@ public class Game {
         return l.remove(l.size()-1);
     }
 
-    //takes a number of cards from the deck and puts it into a hand
+    //takes a number of cards from the top of the deck and puts it into a hand
     public void deal(java.util.List<Card> hand, int numCards) {
         for(int i = 0; i < numCards; ++i)
             hand.add(removeTop(deck));
@@ -60,30 +63,6 @@ public class Game {
     public void emptyHand(java.util.List<Card> hand) {
         while(hand.size() > 0)
             deck.add(removeTop(hand));
-    }
-
-    //will try to bet for the player
-    //sets betError to true if it failed, false if it succeeded
-    public void tryBet(int amount) {
-        if(amount > pBank){
-            betError = true;
-            return;
-        }
-        pBank -= amount;
-        pBet  += amount;
-        betError = false;
-    }
-
-    //will try to deal 2 cards to the player if their bets are >=2
-    //sets stillBet to true if it failed, false if it succeeded
-    public void tryDeal() {
-        if(pBet < 2){
-            stillBet = true;
-            return;
-        }
-        deal(pHand,2);
-        pCCount = countCards(pHand);
-        stillBet = false;
     }
 
     //turns a cards rank into a blackjack value
@@ -117,6 +96,69 @@ public class Game {
         }
 
         return count;
+    }
+
+    //will try to bet for the player
+    //sets betError to true if it failed, false if it succeeded
+    public void tryBet(int amount) {
+        if(amount > pBank){
+            betError = true;
+            return;
+        }
+        pBank -= amount;
+        pBet  += amount;
+        betError = false;
+    }
+
+    //will try to deal 2 cards to the player if their bets are >=2
+    //sets stillBet to true if it failed, false if it succeeded
+    public void tryDeal() {
+        if(pBet < 2){
+            stillBet = true;
+            return;
+        }
+        deal(pHand,2);
+        pCCount = countCards(pHand);
+        stillBet = false;
+    }
+
+    //adds a card to the players hand and recounts cards
+    //sets gameOver to be true if they went over 21, false if otherwise
+    public void tryHit() {
+        deal(pHand,1);
+        pCCount = countCards(pHand);
+
+        gameOver = (pCCount > 21);
+    }
+
+    //resets the game
+    public void gameOver() {
+        //these are needed for display
+        pBet = 0;
+        pCCount = 0;
+        dCCount = 0;
+        //needed for testing loss
+        gameOver = false;
+
+        //return cards back to deck
+        emptyHand(pHand);
+        emptyHand(dHand);
+
+        //reshuffle the deck for randomness
+        shuffle();
+    }
+
+    //resets the game when the player loses
+    public void playerLost() {
+        //player gets nothing so pBank is unchanged
+        gameOver();
+    }
+
+    //resets the game when the dealer loses
+    public void dealerLost() {
+        //player wins their bets and the dealers
+        pBank += 2*pBet;
+        gameOver();
     }
 }
 
