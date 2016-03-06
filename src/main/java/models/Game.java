@@ -17,6 +17,7 @@ public class Game {
     public int     pBet = 0;
     public boolean betError = false;
     public int     pCCount = 0; //player card count
+    public boolean stillBet  = true;
 
     public java.util.List<Card> dHand = new ArrayList<>();
     //don't really need a dBet or dBank for now
@@ -68,6 +69,20 @@ public class Game {
         pBank -= amount;
         pBet  += amount;
         betError = false;
+    }
+
+    //will try to deal 2 cards to the player if their bets are >=2
+    //sets stillBet to true if it failed, false if it succeeded
+    public void tryDeal() {
+        if(pBet < 2){
+            return;
+        } else if (stillBet == false) {
+            return;
+        }else{
+            deal(pHand, 2);
+            pCCount = countCards(pHand);
+            stillBet = false;
+        }
     }
 
     //turns a cards rank into a blackjack value

@@ -50,6 +50,11 @@ public class ApplicationController {
         g.tryBet(amount);
         return  Results.json().render(g);
     }
+
+    public Result dealPost(Context context, Game g){
+        g.tryDeal();
+        return  Results.json().render(g);
+    }
     
     public Result helloWorldJson() {
         

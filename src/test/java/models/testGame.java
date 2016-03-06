@@ -72,6 +72,26 @@ public class testGame {
     }
 
     @Test
+    public void testTryDeal(){
+        Game g = new Game();
+        g.buildDeck(3);
+
+        g.tryDeal();
+        assertEquals(true,g.stillBet);
+        assertEquals(0,g.pHand.size());
+
+        g.tryBet(3);
+        g.tryDeal();
+        assertEquals(false,g.stillBet);
+        assertEquals(2,g.pHand.size());
+
+        g.tryBet(3);
+        g.tryDeal();
+        assertEquals(false,g.stillBet);
+        assertEquals(2,g.pHand.size());
+    }
+
+    @Test
     public void testGenerateVal(){
         Game g = new Game();
 
