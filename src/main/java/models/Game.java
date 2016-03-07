@@ -103,7 +103,7 @@ public class Game {
 
     //will try to deal 2 cards to the player if their bets are >=2
     //keeps stillBet true if it failed, sets to false if it succeeded
-    /*
+
     public void tryDeal() {
         if (bet < 2) {
             errorFlag = true;
@@ -127,7 +127,7 @@ public class Game {
             bettingDisabled = true;
         }
     }
-    */
+
     //turns a cards rank into a blackjack value
     public int generateVal(Card c) {
         int rank = c.getValue();
@@ -160,7 +160,7 @@ public class Game {
 
         return count;
     }
-    /*
+
     public void tryHit() {
         if (pHand.size() > 0) {
             pHand.add(removeTop(deck));
@@ -179,7 +179,7 @@ public class Game {
             errorFlag = true;
             userMessage = "You must get your initial hand dealt before you can hit";
         }
-    }  */
+    }
 
     /*
     public void doubleDown() {
