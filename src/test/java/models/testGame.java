@@ -58,6 +58,43 @@ public class testGame {
     }
 
     @Test
+    public void testGenerateVal(){
+        Game g = new Game();
+
+        int t1 = g.generateVal(new Card(5,Suit.Clubs));
+        assertEquals(5,t1);
+
+        int t2 = g.generateVal(new Card(12,Suit.Diamonds));
+        assertEquals(10,t2);
+
+        int t3 = g.generateVal(new Card(1,Suit.Hearts));
+        assertEquals(11,t3);
+
+        int t4 = g.generateVal(new Card(14,Suit.Spades));
+        assertEquals(-1,t4);
+    }
+
+    @Test
+    public void testCountCards(){
+        Game g = new Game();
+
+        g.pHand.add(new Card(3,Suit.Hearts));
+        g.pHand.add(new Card(12,Suit.Clubs));
+        int t1 = g.countCards(g.pHand);
+        assertEquals(13,t1);
+
+        g.pHand.set(0, new Card(1,Suit.Spades));
+        g.pHand.set(1, new Card(1,Suit.Diamonds));
+        int t2 = g.countCards(g.pHand);
+        assertEquals(12,t2);
+
+        g.pHand.add(new Card(10,Suit.Clubs));
+        g.pHand.add(new Card(10,Suit.Diamonds));
+        int t3 = g.countCards(g.pHand);
+        assertEquals(22,t3);
+    }
+
+    @Test
     public void testTryBet(){
         Game g = new Game();
 
@@ -108,22 +145,6 @@ public class testGame {
         assertEquals(3,g.pHand.size());
     }
 
-    @Test
-    public void testGenerateVal(){
-        Game g = new Game();
-
-        int t1 = g.generateVal(new Card(5,Suit.Clubs));
-        assertEquals(5,t1);
-
-        int t2 = g.generateVal(new Card(12,Suit.Diamonds));
-        assertEquals(10,t2);
-
-        int t3 = g.generateVal(new Card(1,Suit.Hearts));
-        assertEquals(11,t3);
-
-        int t4 = g.generateVal(new Card(14,Suit.Spades));
-        assertEquals(-1,t4);
-    }
 
     @Test
     public void testNewHand(){
@@ -136,23 +157,6 @@ public class testGame {
         assertEquals(true,g.againDisabled);
     }
 
-    @Test
-    public void testCountCards(){
-        Game g = new Game();
 
-        g.pHand.add(new Card(3,Suit.Hearts));
-        g.pHand.add(new Card(12,Suit.Clubs));
-        int t1 = g.countCards(g.pHand);
-        assertEquals(13,t1);
 
-        g.pHand.set(0, new Card(1,Suit.Spades));
-        g.pHand.set(1, new Card(1,Suit.Diamonds));
-        int t2 = g.countCards(g.pHand);
-        assertEquals(12,t2);
-
-        g.pHand.add(new Card(10,Suit.Clubs));
-        g.pHand.add(new Card(10,Suit.Diamonds));
-        int t3 = g.countCards(g.pHand);
-        assertEquals(22,t3);
-    }
 }
