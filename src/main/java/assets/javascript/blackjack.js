@@ -6,33 +6,61 @@ $.getJSON("http://localhost:8080/game", function( data ) {
 
 function display(game){
     console.log(game);
-
-}
-
-function displayMoney(game){
-    //First try to update bets
-    if(game.betError == true){
-       alert("You cannot bet more than you have in the bank");
-    }else{
-       $("#userMoney").html("$" + game.pBank.toString());
-       $("#userBetAmount").html("$" + game.pBet.toString());
-       $("#dealerBetAmount").html("$" + game.pBet.toString());
+    //Rebuild user hand now
+    //First remove all user card divs from view
+    $("#userCards").html("");
+    //Iteratively add users cards from game.pHand
+    for(i=0;i<game.pHand.length;i++){
+        card = game.pHand[i];
+        cardDiv = "<div><img src='/assets/cards/" + card.value + card.suit.charAt(0).toLowerCase() + ".png'></div>";
+        $("#userCards").append(cardDiv);
     }
+    //Show player Card Counting Total if greater than zero
+    if(game.pCCount > 0){
+        $("#userCardTotal").html(game.pCCount);
+    } else{
+        $("#userCardTotal").html("");
+    }
+
+    //Rebuild Dealer Hand
+     $("#dealerCards").html("");
+     //Iteratively add users cards from game.dHand
+     for(i=0;i<game.dHand.length;i++){
+         card = game.dHand[i];
+         cardDiv = "<div><img src='/assets/cards/" + card.value + card.suit.charAt(0).toLowerCase() + ".png'></div>";
+         $("#dealerCards").append(cardDiv);
+     }
+     //Show dealer Card counting total if greater than zero
+     if(game.dCCount > 0){
+             $("#dealerCardTotal").html(game.dCCount);
+         } else{
+             $("#dealerCardTotal").html("");
+         }
+
+     //Display Money
+     $("#userMoney").html("$" + game.bank.toString());
+     $("#userBetAmount").html("$" + game.bet.toString());
+     $("#dealerBetAmount").html("$" + game.bet.toString());
+
+     //Disable required buttons
+     $("#playAgain").prop("disabled",game.againDisabled);
+     $("#deal").prop("disabled",game.dealDisabled);
+     $("#hit").prop("disabled",game.hitDisabled);
+     $("#stand").prop("disabled",game.standDisabled);
+     $("#split").prop("disabled",game.splitDisabled);
+     $("#doubleDown").prop("disabled",game.doubleDisabled);
+     $("#userBetButtons > button").prop("disabled",game.bettingDisabled);
+
+     //Display userMessage as error or in userMsg
+     //Depending on whether errorFlag is true
+     if(game.errorFlag){
+        alert(game.userMessage);
+        game.errorFlag = false;
+     }else{
+        $("#userMsg").html(game.userMessage);
+     }
 }
 
-function displayUserCards(game){
-        //Rebuild user hand now
-        //First remove all user card divs from view
-        $("#userCards").html("");
-        //Iteratively add users cards from game.pHand
-        for(i=0;i<game.pHand.length;i++){
-            card = game.pHand[i];
-            cardDiv = "<div><img src='/assets/cards/" + card.value + card.suit.charAt(0).toLowerCase() + ".png'></div>";
-            $("#userCards").append(cardDiv);
-        }
-        //Show Card Counting Total
-        $("#userCardTotal").html(game.pCCount);
-}
 
 function dealerTurn(game){
      $("#dalerCards").html("");
@@ -53,37 +81,18 @@ function dealerTurn(game){
 
 
 $("#deal").click(function(){
-        if (game.stillBet == true){
             $.ajax({
                     type: "POST",
                     url: "/deal",
                     data: JSON.stringify(game),
                     success: function(data, status){
                     //Display game data
-                    displayUserCards(data);
+                    display(data);
                     game = data;
-                    if(game.stillBet == false){
-                            if(game.canSplit == true){
-                                $("#userMsg").html("Hit, Double Down, Stand, or Split");
-                                $("#split").prop("disabled", false);
-                            } else{
-                                $("#userMsg").html("Hit, Double Down, or Stand");
-                            }
-                            $("#doubleDown").prop("disabled", false);
-                            $("#hit").prop("disabled", false);
-                            $("#deal").prop("disabled", true);
-                            $("#playAgain").prop("disabled", true);
-                            $("#userBetButtons > button").prop("disabled", true);
-                     } else{
-                        alert("You must bet at least $2");
-                     }
                     },
                     contentType:"application/json; charset=utf-8",
                     dataType:"json",
                  });
-            } else{
-                alert("You have already been dealt your hand");
-}
 });
 $("#hit").click(function(){
             $.ajax({
@@ -92,17 +101,8 @@ $("#hit").click(function(){
                data: JSON.stringify(game),
                success: function(data, status){
                //Display game data
-               displayUserCards(data);
+               display(data);
                game = data;
-               $("#userMsg").html("Hit or Stand");
-               $("#doubleDown").prop("disabled", true);
-               $("#split").prop("disabled", true);
-               if(game.bust == true){
-                 $("#userMsg").html("You bust");
-                 $("#hit").prop("disabled", true);
-                 $("#playAgain").prop("disabled", false);
-                 displayMoney(game);
-               }
                },
                contentType:"application/json; charset=utf-8",
                dataType:"json",
@@ -116,27 +116,14 @@ $("#playAgain").click(function(){
                   data: JSON.stringify(game),
                   success: function(data, status){
                   //Display game data
-                  displayMoney(data);
+                  display(data);
                   game = data;
-                  playAgain();
                   },
                   contentType:"application/json; charset=utf-8",
                   dataType:"json",
          });
 });
 
-function playAgain(){
-    $("#userCards").html("");
-    $("#dealerCards").html("");
-    $("#deal").prop("disabled", false);
-    $("#userCardTotal").html("");
-    $("#dealerCardTotal").html("");
-    $("#userBetButtons > button").prop("disabled",false);
-    $("#userMsg").html("Place your bet");
-    $("#doubleDown").prop("disabled",true);
-    $("#split").prop("disabled",true);
-    $("#hit").prop("disabled",true);
-}
 
 $("#doubleDown").click(function(){
         $.ajax({
@@ -145,19 +132,8 @@ $("#doubleDown").click(function(){
                   data: JSON.stringify(game),
                   success: function(data, status){
                   //Display game data
-                  displayMoney(data);
+                  display(data);
                   game = data;
-                  displayUserCards(game);
-                  if(game.bust == true){
-                    $("#userMsg").html("You bust");
-                  } else{
-                  dealerTurn(game);
-                  }
-                  $("#hit").prop("disabled", true);
-                  $("#stand").prop("disabled", true);
-                  $("#split").prop("disabled", true);
-                  $("#doubleDown").prop("disabled", true);
-                  $("#playAgain").prop("disabled", false);
                   },
                   contentType:"application/json; charset=utf-8",
                   dataType:"json",
@@ -175,7 +151,7 @@ function userBetFun(bet){
         success: function(data, status){
         console.log("Data: " + data + "\nStatus: " + status);
         //Display game data
-        displayMoney(data);
+        display(data);
         game = data;},
         contentType:"application/json; charset=utf-8",
         dataType:"json",

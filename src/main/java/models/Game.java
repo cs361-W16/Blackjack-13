@@ -13,18 +13,18 @@ public class Game {
 
     //pHand is the players hand and dHand is the dealers hand
     public java.util.List<Card> pHand = new ArrayList<>();
-    public int     pBank = 100;
-    public int     pBet = 0;
+    public int     bank = 100;
+    public int     bet = 0;
     public int     pCCount = 0; //player card count
-    public boolean betError = false;
-    public boolean stillBet  = true;
-    public boolean hasHit = false;
-    public boolean handOver = false;
-    public boolean bust = false;
-    public boolean canSplit = false;
-    public boolean hasSplit = false;
-    public boolean dealerBust = false;
-    public boolean playerWin = false;
+    public boolean errorFlag = false;
+    public String  userMessage = "Place your Bet";
+    public boolean againDisabled = true;
+    public boolean dealDisabled = false;
+    public boolean hitDisabled = true;
+    public boolean standDisabled = true;
+    public boolean splitDisabled = true;
+    public boolean doubleDisabled = true;
+    public boolean bettingDisabled = false;
 
     public java.util.List<Card> dHand = new ArrayList<>();
     public int     dCCount = 0; //dealer card count
@@ -52,17 +52,13 @@ public class Game {
         }
         dCCount = countCards(dHand);
         if(dCCount > 21){
-            dealerBust = true;
-            playerWin = true;
-            handOver = true;
-            pBet = 0;
+            bank += bet*= 2;
+            endHand("Dealer busts. You win!");
         } else if(dCCount > pCCount){
-            handOver = true;
-            playerWin = false;
+            endHand("Dealer Wins");
         } else{
-            handOver = true;
-            playerWin = true;
-            pBank += pBet *=2;
+            endHand("You win!");
+            bank += bet *=2;
         }
     }
 
@@ -91,29 +87,39 @@ public class Game {
     //will try to bet for the player
     //sets betError to true if it failed, false if it succeeded
     public void tryBet(int amount) {
-        if(amount > pBank){
-            betError = true;
+        if(amount > bank){
+            errorFlag = true;
+            userMessage = "You cannot bet more money than you have in the bank";
             return;
+        } else {
+            bank -= amount;
+            bet += amount;
         }
-        pBank -= amount;
-        pBet  += amount;
-        betError = false;
     }
 
     //will try to deal 2 cards to the player if their bets are >=2
     //keeps stillBet true if it failed, sets to false if it succeeded
     public void tryDeal() {
-        if(pBet < 2){
+        if(bet < 2){
+            errorFlag = true;
+            userMessage = "You must bet a minimum of $2";
             return;
-        } else if (stillBet == false) {
+        } else if (pHand.size() > 0) {
+            errorFlag = true;
+            userMessage = "You have already been dealt your initial hand";
             return;
         }else{
             deal(pHand, 2);
             pCCount = countCards(pHand);
             if(pHand.get(0).getValue() == pHand.get(1).getValue()){
-                canSplit = true;
+                splitDisabled = false;
             }
-            stillBet = false;
+            dealDisabled = true;
+            againDisabled = true;
+            doubleDisabled = false;
+            standDisabled = false;
+            hitDisabled = false;
+            bettingDisabled = true;
         }
     }
 
@@ -150,45 +156,60 @@ public class Game {
         return count;
     }
     public void tryHit(){
-        if((!stillBet) && (!handOver) ){
+        if(pHand.size() > 0) {
             pHand.add(removeTop(deck));
-            hasHit = true;
             pCCount = countCards(pHand);
-            if (pCCount > 21){
-                bust = true;
-                handOver = true;
-                pBet = 0;
+            if (pCCount > 21) {
+                endHand("You bust");
+            } else {
+                againDisabled = true;
+                dealDisabled = true;
+                hitDisabled = false;
+                standDisabled = false;
+                doubleDisabled = true;
+                splitDisabled = true;
             }
-        }else{
-            return;
+        } else{
+            errorFlag = true;
+            userMessage = "You must get your initial hand dealt before you can hit";
         }
     }
 
     public void doubleDown(){
-        pBet *= 2;
+        bet *= 2;
         deal(pHand, 1);
         pCCount = countCards(pHand);
         if(pCCount > 21){
-            bust = true;
+            endHand("You bust");
         } else {
             dealerTurn();
         }
     }
 
+    public void endHand(String message){
+        userMessage = message;
+        againDisabled = false;
+        dealDisabled = true;
+        hitDisabled = true;
+        standDisabled = true;
+        doubleDisabled = true;
+        splitDisabled = true;
+    }
+
     //Resets all variables except money and deck
     public void newHand(){
-        pBet = 0;
-        betError = false;
+        bet = 0;
+        errorFlag = false;
+        userMessage = "Place your Bet";
         pCCount = 0;
         dCCount = 0;
-        stillBet  = true;
-        hasHit = false;
-        handOver = false;
-        bust = false;
-        canSplit = false;
-        hasSplit = false;
-        dealerBust = false;
-        playerWin = false;
+        againDisabled = true;
+        dealDisabled = false;
+        hitDisabled = true;
+        splitDisabled = true;
+        standDisabled = true;
+        doubleDisabled = true;
+        bettingDisabled = false;
         emptyHand(pHand);
         emptyHand(dHand);
     }

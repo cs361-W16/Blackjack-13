@@ -62,14 +62,16 @@ public class testGame {
         Game g = new Game();
 
         g.tryBet(101);
-        assertEquals(true,g.betError);
-        assertEquals(0,g.pBet);
-        assertEquals(100,g.pBank);
+        assertEquals(true,g.errorFlag);
+        assertEquals(0,g.bet);
+        assertEquals(100,g.bank);
+
+        g.errorFlag = false;
 
         g.tryBet(5);
-        assertEquals(false,g.betError);
-        assertEquals(5,g.pBet);
-        assertEquals(95,g.pBank);
+        assertEquals(false,g.errorFlag);
+        assertEquals(5,g.bet);
+        assertEquals(95,g.bank);
     }
 
     @Test
@@ -78,18 +80,14 @@ public class testGame {
         g.buildDeck(3);
 
         g.tryDeal();
-        assertEquals(true,g.stillBet);
+        assertEquals(true,g.pHand.size()==0);
         assertEquals(0,g.pHand.size());
 
         g.tryBet(3);
         g.tryDeal();
-        assertEquals(false,g.stillBet);
+        assertEquals(true,g.pHand.size()>0);
         assertEquals(2,g.pHand.size());
 
-        g.tryBet(3);
-        g.tryDeal();
-        assertEquals(false,g.stillBet);
-        assertEquals(2,g.pHand.size());
     }
 
     @Test
@@ -98,15 +96,15 @@ public class testGame {
         g.buildDeck(3);
 
         g.tryHit();
-        assertEquals(false,g.hasHit);
+        assertEquals(true,g.pHand.size()==0);
 
         g.tryBet(3);
         g.tryHit();
-        assertEquals(false,g.hasHit);
+        assertEquals(true,g.pHand.size()==0);
 
         g.tryDeal();
         g.tryHit();
-        assertEquals(true,g.hasHit);
+        assertEquals(true,g.pHand.size()>0);
         assertEquals(3,g.pHand.size());
     }
 
@@ -132,12 +130,10 @@ public class testGame {
         Game g = new Game();
         g.buildDeck(3);
         g.pCCount = 23;
-        g.bust = true;
-        g.tryBet(10);
         g.newHand();
-        assertEquals(false, g.bust);
+        assertEquals(false, g.errorFlag);
         assertEquals(0, g.pCCount);
-        assertEquals(0,g.pBet);
+        assertEquals(true,g.againDisabled);
     }
 
     @Test
