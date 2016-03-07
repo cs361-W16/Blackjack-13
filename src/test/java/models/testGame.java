@@ -157,6 +157,31 @@ public class testGame {
         assertEquals(true,g.againDisabled);
     }
 
+    @Test
+    public void testEndHand(){
+        Game g = new Game();
+        g.buildDeck(3);
+        g.tryBet(3);
+        g.pHand.add(new Card(3,Suit.Hearts));
+        g.pHand.add(new Card(6, Suit.Clubs));
+        g.endHand("User Lost");
+
+        assertEquals("User Lost", g.userMessage);
+        assertEquals(true, g.dealDisabled);
+    }
+
+    @Test
+    public void doubleDown(){
+        Game g = new Game();
+        g.buildDeck(3);
+        g.shuffle();
+        g.tryBet(5);
+        g.tryDeal();
+        g.doubleDown();
+        assertEquals(10,g.bet);
+        assertEquals(3, g.pHand.size());
+    }
+
 
 
 }
