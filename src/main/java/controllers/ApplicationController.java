@@ -58,19 +58,9 @@ public class ApplicationController {
         return Results.json().render(g);
     }
 
-    public Result playerLostPost(Context context, Game g){
-        g.playerLost();
-
-        return Results.json().render(g);
-    }
 
     public Result dealPost(Context context, Game g){
         g.tryDeal();
-        return  Results.json().render(g);
-    }
-
-    public Result hitPost(Context context, Game g){
-        g.tryHit();
         return  Results.json().render(g);
     }
 
