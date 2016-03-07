@@ -12,10 +12,10 @@ public class Game {
     public java.util.List<Card> deck = new ArrayList<>();
 
     //pHand is the players hand and dHand is the dealers hand
-    public java.util.List<Card> pHand = new ArrayList<>();
-    public int bank = 100;
-    public int bet = 0;
-    public int pCCount = 0; //player card count
+    //public java.util.List<Card> pHand = new ArrayList<>();
+    //public int bank = 100;
+    //public int bet = 0;
+    //public int pCCount = 0; //player card count
     public boolean errorFlag = false;
     public String userMessage = "Place your Bet";
     public boolean againDisabled = true;
@@ -26,8 +26,8 @@ public class Game {
     public boolean doubleDisabled = true;
     public boolean bettingDisabled = false;
 
-    public java.util.List<Card> dHand = new ArrayList<>();
-    public int dCCount = 0; //dealer card count
+    //public java.util.List<Card> dHand = new ArrayList<>();
+    //public int dCCount = 0; //dealer card count
 
     public boolean gameOver = false;
     public boolean playerWins = false;
@@ -47,7 +47,7 @@ public class Game {
             }
         }
     }
-
+    /*
     public void dealerTurn() {
         deal(dHand, 2);
         while (countCards(dHand) < 17) {
@@ -64,7 +64,7 @@ public class Game {
             bank += bet *= 2;
         }
     }
-
+    */
     public void shuffle() {
         long seed = System.nanoTime();
         Collections.shuffle(deck, new Random(seed));
@@ -89,6 +89,7 @@ public class Game {
 
     //will try to bet for the player
     //sets betError to true if it failed, false if it succeeded
+    /*
     public void tryBet(int amount) {
         if (amount > bank) {
             errorFlag = true;
@@ -98,10 +99,11 @@ public class Game {
             bank -= amount;
             bet += amount;
         }
-    }
+    } */
 
     //will try to deal 2 cards to the player if their bets are >=2
     //keeps stillBet true if it failed, sets to false if it succeeded
+    /*
     public void tryDeal() {
         if (bet < 2) {
             errorFlag = true;
@@ -125,7 +127,7 @@ public class Game {
             bettingDisabled = true;
         }
     }
-
+    */
     //turns a cards rank into a blackjack value
     public int generateVal(Card c) {
         int rank = c.getValue();
@@ -158,7 +160,7 @@ public class Game {
 
         return count;
     }
-
+    /*
     public void tryHit() {
         if (pHand.size() > 0) {
             pHand.add(removeTop(deck));
@@ -177,8 +179,9 @@ public class Game {
             errorFlag = true;
             userMessage = "You must get your initial hand dealt before you can hit";
         }
-    }
+    }  */
 
+    /*
     public void doubleDown() {
         bet *= 2;
         deal(pHand, 1);
@@ -188,7 +191,7 @@ public class Game {
         } else {
             dealerTurn();
         }
-    }
+    } */
 
     public void endHand(String message) {
         userMessage = message;
