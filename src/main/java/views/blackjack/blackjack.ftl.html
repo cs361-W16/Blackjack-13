@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/assets/css/blackjack.css">
+    <script type="text/javascript" src="/assets/webjars/jquery/2.1.3/jquery.js"></script>
+    <title>Blackjack</title>
+</head>
+<body>
+<label class="label1">Dealer</label>
+<div id="dealer">
+    <div id="dealerCardArea">
+        <div id="dealerCards">
+        </div>
+    </div>
+    <div id="dealerCardTotal"></div>
+    <div id="dealerBet">
+        <label class="label2">Dealer Bet</label><br>
+        <label class="label2" id="dealerBetAmount">$0</label>
+    </div>
+</div>
+
+<div id="divider">
+    <div id="dividerText">Dealer Hits on Soft 17</div>
+
+</div>
+
+<div id="user">
+    <div id="userMsg">
+        Place Your Bet
+    </div>
+
+    <div id="userCardArea">
+        <div id="userCards">
+        </div>
+        <div id="userCardTotal"></div>
+    </div>
+
+    <div id="userActions">
+        <button id="playAgain" disabled="true">Play Again</button>
+        <button id="deal">Deal</button>
+        <button id="hit" disabled="true">Hit</button>
+        <button id="stand">Stand</button>
+        <button id="split" disabled="true">Split</button>
+        <button id="doubleDown" disabled="true">Double Down</button>
+    </div>
+
+    <div id="userBettingArea">
+        <div id="userMoneyDiv">
+            <div id="userBank">
+                <label class="label2">Bank</label>
+                <label class="label2" id="userMoney">$100</label>
+            </div>
+            <div id="userCurrentBet">
+                <label class="label2">Bet</label>
+                <label class="label2" id="userBetAmount">$0</label>
+            </div>
+        </div>
+        <div id="userBetButtons">
+            <label class="label2">Bet</label>
+            <button id="bet1" onclick="userBetFun(1)">1</button>
+            <button id="bet5" onclick="userBetFun(5)">5</button>
+            <button id="bet10" onclick="userBetFun(10)">10</button>
+            <button id="bet25" onclick="userBetFun(25)">25</button>
+            <button id="bet50" onclick="userBetFun(50)">50</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/assets/javascript/blackjack.js"></script>
+
+
+</body>
+</html>
