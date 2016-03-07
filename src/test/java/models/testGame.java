@@ -99,14 +99,16 @@ public class testGame {
         Game g = new Game();
 
         g.tryBet(101);
-        assertEquals(true,g.betError);
-        assertEquals(0,g.pBet);
-        assertEquals(100,g.pBank);
+        assertEquals(true,g.errorFlag);
+        assertEquals(0,g.bet);
+        assertEquals(100,g.bank);
+
+        g.errorFlag = false;
 
         g.tryBet(5);
-        assertEquals(false,g.betError);
-        assertEquals(5,g.pBet);
-        assertEquals(95,g.pBank);
+        assertEquals(false,g.errorFlag);
+        assertEquals(5,g.bet);
+        assertEquals(95,g.bank);
     }
 
     @Test
@@ -115,75 +117,46 @@ public class testGame {
         g.buildDeck(3);
 
         g.tryDeal();
-        assertEquals(true,g.stillBet);
+        assertEquals(true,g.pHand.size()==0);
         assertEquals(0,g.pHand.size());
 
         g.tryBet(3);
         g.tryDeal();
-        assertEquals(false,g.stillBet);
+        assertEquals(true,g.pHand.size()>0);
         assertEquals(2,g.pHand.size());
+
     }
 
     @Test
     public void testTryHit(){
         Game g = new Game();
+        g.buildDeck(3);
 
-        g.deck.add(new Card(11,Suit.Clubs));
-        g.deck.add(new Card(2,Suit.Spades));
-        g.deck.add(new Card(13,Suit.Diamonds));
-        g.deck.add(new Card(1,Suit.Hearts));
+        g.tryHit();
+        assertEquals(true,g.pHand.size()==0);
 
-        g.tryHit(); //11
-        assertEquals(false,g.gameOver);
+        g.tryBet(3);
+        g.tryHit();
+        assertEquals(true,g.pHand.size()==0);
 
-        g.tryHit(); //21
-        assertEquals(false,g.gameOver);
-
-        g.tryHit(); //13
-        g.tryHit(); //23
-        assertEquals(true,g.gameOver);
-    }
-
-    @Test
-    public void testGameOver(){
-        Game g = new Game();
-        g.buildDeck(1);
-
-        g.tryBet(5);
         g.tryDeal();
-
-        //MARK FOR REPLACE. When dealer code is implemented
-        g.deal(g.dHand,2);
-        g.dCCount = g.countCards(g.dHand);
-
-        for(int i = 0; i < 2; ++i)
-            g.tryDeal();
-
-        g.gameOver();
-        assertEquals(0,g.pBet);
-        assertEquals(0,g.pCCount);
-        assertEquals(0,g.dCCount);
-        assertEquals(false,g.gameOver);
-        assertEquals(0,g.pHand.size());
-        assertEquals(0,g.dHand.size());
-        assertEquals(52,g.deck.size());
+        g.tryHit();
+        assertEquals(true,g.pHand.size()>0);
+        assertEquals(3,g.pHand.size());
     }
+
 
     @Test
-    public void testPlayerLost(){
+    public void testNewHand(){
         Game g = new Game();
-
-        g.tryBet(5);
-        g.playerLost();
-        assertEquals(95,g.pBank);
+        g.buildDeck(3);
+        g.pCCount = 23;
+        g.newHand();
+        assertEquals(false, g.errorFlag);
+        assertEquals(0, g.pCCount);
+        assertEquals(true,g.againDisabled);
     }
 
-    @Test
-    public void testDealerLost(){
-        Game g = new Game();
 
-        g.tryBet(5);
-        g.dealerLost();
-        assertEquals(105,g.pBank);
-    }
+
 }

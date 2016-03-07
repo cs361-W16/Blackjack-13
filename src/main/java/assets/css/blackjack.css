@@ -18,7 +18,9 @@ body{
     font-size:20px;
     font-weight:bold;
 }
+
 #dealer{
+    position:relative;
     height:240px;
     margin:auto;
     padding:3px;
@@ -46,7 +48,16 @@ body{
 #dealerCards > div{
     display:table-cell;
 }
+#dealerCardTotal{
+    display:inline-block;
+    width:50px;
+    background-color: black;
+    color: white;
+}
 #dealerBet{
+    position:absolute;
+    left:200px;
+    bottom:5px;
     height:50px;
     width:120px;
     border: solid 2px;
@@ -111,11 +122,12 @@ body{
     color: white;
 }
 #userActions > button{
-    width:70px;
-    height:70px;
+    width:60px;
+    height:60px;
     border-radius:8px;
-    margin: 0px 30px;
+    margin: 0px 10px;
     outline:none;
+    vertical-align:top;
 }
 #userActions > button:hover{
     cursor:hand;
