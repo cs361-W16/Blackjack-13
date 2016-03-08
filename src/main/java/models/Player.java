@@ -13,6 +13,8 @@ public class Player extends Person implements Serializable{
         this.bank = bank;
     }
     public Player(){
+        super();
+        this.bank = 0;
     }
 
     public void setBet(int newBet){

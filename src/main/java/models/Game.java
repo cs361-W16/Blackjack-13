@@ -59,9 +59,9 @@ public class Game implements Serializable {
 
 
     private void dealerTurn() {
-        deal(dealer.getHand(), 2);
+        dealer.setHand(deal(dealer.getHand(), 2));
         while (dealer.getCount() < 17) {
-            deal(dealer.getHand(), 1);
+            dealer.setHand(deal(dealer.getHand(), 1));
         }
         if (dealer.getCount() > 21) {
             player.win();
