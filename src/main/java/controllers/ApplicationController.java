@@ -39,14 +39,13 @@ public class ApplicationController {
     }
 
     public Result gameGet(){
-        Game g = new Game();
-        g.buildDeck(3);
-        g.shuffle();
+        Game g = new Game(3, 100);
 
         return Results.json().render(g);
     }
 
     public Result betPost(Context context, @PathParam("amount") int amount, Game g){
+        System.out.println("We are at betPost!");
         g.tryBet(amount);
 
         return Results.json().render(g);
@@ -66,7 +65,6 @@ public class ApplicationController {
 
     public Result newHand(Context context, Game g){
         g.newHand();
-        g.shuffle();
         return Results.json().render(g);
     }
 

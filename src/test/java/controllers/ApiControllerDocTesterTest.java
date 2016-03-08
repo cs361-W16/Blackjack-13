@@ -17,6 +17,7 @@
 package controllers;
 
 
+import models.Game;
 import org.junit.Test;
 
 import ninja.NinjaDocTester;
@@ -66,5 +67,15 @@ public class ApiControllerDocTesterTest extends NinjaDocTester {
                 Request.GET().url(testServerUrl().path(URL_BLACKJACK)));
         assertThat(response.payload, containsString("Blackjack"));
     }
+
+    @Test
+    public void testBlackjackBet(){
+        Game g = new Game(3, 100);
+        Response response = makeRequest(
+                Request.POST().url(testServerUrl().path("/bet/200")).contentTypeApplicationJson().payload(g));
+        assertThat(response.payload, containsString("You cannot bet more money than you have in the bank"));
+
+    }
+
 
 }

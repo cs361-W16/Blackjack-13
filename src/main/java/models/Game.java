@@ -1,5 +1,7 @@
 package models;
 
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -7,17 +9,18 @@ import java.util.Random;
 /**
  * Created by michaelhilton on 1/25/16.
  */
-public class Game {
+public class Game implements Serializable {
 
-    public java.util.List<Card> deck = new ArrayList<>();
+    public java.util.List<Card> deck;
 
-    //pHand is the players hand and dHand is the dealers hand
-    //public java.util.List<Card> pHand = new ArrayList<>();
-    //public int bank = 100;
-    //public int bet = 0;
-    //public int pCCount = 0; //player card count
+    public Player player;
+    public Dealer dealer;
+
     public boolean errorFlag = false;
     public String userMessage = "Place your Bet";
+
+    public int pCCount = 0;
+    public int dCCount = 0;
     public boolean againDisabled = true;
     public boolean dealDisabled = false;
     public boolean hitDisabled = true;
@@ -26,18 +29,25 @@ public class Game {
     public boolean doubleDisabled = true;
     public boolean bettingDisabled = false;
 
-    //public java.util.List<Card> dHand = new ArrayList<>();
-    //public int dCCount = 0; //dealer card count
 
-    public boolean gameOver = false;
-    public boolean playerWins = false;
 
-    public Game() {
+
+    public Game(int numDecks, int playerBank) {
+        this.player = new Player(playerBank);
+        this.dealer = new Dealer();
+        this.deck = new ArrayList<>();
+        buildDeck(numDecks);
+        shuffle();
+    }
+
+    private void emptyHands(){
+        deck.addAll(dealer.emptyHand());
+        deck.addAll(player.emptyHand());
     }
 
     //Ranks go from 1 to 13. Aces are 1 and Kings are 13.
     //adds the number of decks to the game
-    public void buildDeck(int numDecks) {
+    private void buildDeck(int numDecks) {
         for (int i = 0; i < numDecks; ++i) {
             for (int j = 1; j < 14; ++j) {
                 deck.add(new Card(j, Suit.Clubs));
@@ -47,92 +57,46 @@ public class Game {
             }
         }
     }
-    /*
-    public void dealerTurn() {
-        deal(dHand, 2);
-        while (countCards(dHand) < 17) {
-            deal(dHand, 1);
+
+
+    private void dealerTurn() {
+        deal(dealer.getHand(), 2);
+        while (countCards(dealer.getHand()) < 17) {
+            deal(dealer.getHand(), 1);
         }
-        dCCount = countCards(dHand);
-        if (dCCount > 21) {
-            bank += bet *= 2;
+        if (countCards(dealer.getHand()) > 21) {
+            player.win();
             endHand("Dealer busts. You win!");
-        } else if (dCCount > pCCount) {
+        } else if (countCards(dealer.getHand()) > countCards(player.getHand())) {
             endHand("Dealer Wins");
         } else {
             endHand("You win!");
-            bank += bet *= 2;
+            player.win();
         }
     }
-    */
-    public void shuffle() {
+
+    private void shuffle() {
         long seed = System.nanoTime();
         Collections.shuffle(deck, new Random(seed));
     }
 
     //removes the top card from a list and returns it
-    public Card removeTop(java.util.List<Card> l) {
-        return l.remove(l.size() - 1);
-    }
+
 
     //takes a number of cards from the top of the deck and puts it into a hand
-    /*
-    public void deal(java.util.List<Card> hand, int numCards) {
-        for (int i = 0; i < numCards; ++i)
+
+    private java.util.List<Card> deal(java.util.List<Card> hand, int numCards) {
+        for (int i = 0; i < numCards; ++i) {
             hand.add(removeTop(deck));
-    } */
-
-    //empties the hand and puts all of the cards back into the deck
-    /*
-    public void emptyHand(java.util.List<Card> hand) {
-        while (hand.size() > 0)
-            deck.add(removeTop(hand));
-    } */
-
-    //will try to bet for the player
-    //sets betError to true if it failed, false if it succeeded
-    /*
-    public void tryBet(int amount) {
-        if (amount > bank) {
-            errorFlag = true;
-            userMessage = "You cannot bet more money than you have in the bank";
-            return;
-        } else {
-            bank -= amount;
-            bet += amount;
         }
-    } */
-
-    //will try to deal 2 cards to the player if their bets are >=2
-    //keeps stillBet true if it failed, sets to false if it succeeded
-
-    public void tryDeal() {
-        if (bet < 2) {
-            errorFlag = true;
-            userMessage = "You must bet a minimum of $2";
-            return;
-        } else if (pHand.size() > 0) {
-            errorFlag = true;
-            userMessage = "You have already been dealt your initial hand";
-            return;
-        } else {
-            deal(pHand, 2);
-            pCCount = countCards(pHand);
-            if (pHand.get(0).getValue() == pHand.get(1).getValue()) {
-                splitDisabled = false;
-            }
-            dealDisabled = true;
-            againDisabled = true;
-            doubleDisabled = false;
-            standDisabled = false;
-            hitDisabled = false;
-            bettingDisabled = true;
-        }
+        return hand;
     }
 
-    //turns a cards rank into a blackjack value
-    /*
-    public int generateVal(Card c) {
+    private Card removeTop(java.util.List<Card> hand) {
+        return hand.remove(hand.size() - 1);
+    }
+
+    private int generateVal(Card c) {
         int rank = c.getValue();
         if (rank >= 2 && rank <= 10)
             return rank; //2-10
@@ -142,11 +106,9 @@ public class Game {
             return 11; //A
 
         return -1; //error
-    } */
+    }
 
-    //counts all of the cards in the hand and gets as close to 21 as possible
-    /*
-    public int countCards(java.util.List<Card> hand) {
+    private int countCards(java.util.List<Card> hand) {
         int count = 0;
         int numAces = 0;
 
@@ -163,12 +125,54 @@ public class Game {
         }
 
         return count;
-    }  */
+    }
+
+
+    //will try to bet for the player
+    //sets betError to true if it failed, false if it succeeded
+    public void tryBet(int amount) {
+        if (amount > player.getBank()) {
+            errorFlag = true;
+            userMessage = "You cannot bet more money than you have in the bank";
+            return;
+        } else {
+            player.setBet(player.getBet() + amount);
+            dealer.setBet(dealer.getBet() + amount);
+        }
+    }
+
+    //will try to deal 2 cards to the player if their bets are >=2
+    //keeps stillBet true if it failed, sets to false if it succeeded
+
+    public void tryDeal() {
+        if (player.getBet() < 2) {
+            errorFlag = true;
+            userMessage = "You must bet a minimum of $2";
+            return;
+        } else if (player.getHand().size() > 0) {
+            errorFlag = true;
+            userMessage = "You have already been dealt your initial hand";
+            return;
+        } else {
+            player.setHand(deal(player.getHand(), 2));
+            pCCount = countCards(player.getHand());
+            if (player.getHand().get(0).getValue() == player.getHand().get(1).getValue()) {
+                splitDisabled = false;
+            }
+            dealDisabled = true;
+            againDisabled = true;
+            doubleDisabled = false;
+            standDisabled = false;
+            hitDisabled = false;
+            bettingDisabled = true;
+        }
+    }
+
 
     public void tryHit() {
-        if (pHand.size() > 0) {
-            pHand.add(removeTop(deck));
-            pCCount = countCards(pHand);
+        if (player.getHand().size() > 0) {
+            player.addCard(removeTop(deck));
+            pCCount = countCards(player.getHand());
             if (pCCount > 21) {
                 endHand("You bust");
             } else {
@@ -185,19 +189,20 @@ public class Game {
         }
     }
 
-    /*
+
     public void doubleDown() {
-        bet *= 2;
-        deal(pHand, 1);
-        pCCount = countCards(pHand);
+        player.setBet(player.getBet() * 2);
+        dealer.setBet(dealer.getBet() * 2);
+        player.setHand(deal(player.getHand(), 1));
+        pCCount = countCards(player.getHand());
         if (pCCount > 21) {
             endHand("You bust");
         } else {
             dealerTurn();
         }
-    } */
+    }
 
-    public void endHand(String message) {
+    private void endHand(String message) {
         userMessage = message;
         againDisabled = false;
         dealDisabled = true;
@@ -209,7 +214,8 @@ public class Game {
 
     //Resets all variables except money and deck
     public void newHand() {
-        bet = 0;
+        player.setBet(0);
+        dealer.setBet(0);
         errorFlag = false;
         userMessage = "Place your Bet";
         pCCount = 0;
@@ -221,9 +227,7 @@ public class Game {
         standDisabled = true;
         doubleDisabled = true;
         bettingDisabled = false;
-        emptyHand(pHand);
-        emptyHand(dHand);
-
+        emptyHands();
     }
 }
 

@@ -11,30 +11,27 @@ public class testGame {
 
     @Test
     public void testGameCreation(){
-        Game g = new Game();
+        Game g = new Game(3, 100);
         assertNotNull(g);
     }
-
+    /*
     @Test
     public void testGameBuildDeck(){
-        Game g = new Game();
-        g.buildDeck(3);
+        Game g = new Game(3, 100);
         //52*3=156 cards for 3 decks
         assertEquals(156,g.deck.size());
     }
+    */
 
     @Test
     public void testGameInit(){
-        Game g = new Game();
-        g.buildDeck(1);
-        g.shuffle();
-        assertNotEquals(1,g.deck.get(0).getValue());
+        Game g = new Game(3, 100);
+        assertEquals(g.player.getBank(), 100);
     }
-
+    /*
     @Test
     public void testDeal(){
-        Game g = new Game();
-        g.buildDeck(1);
+        Game g = new Game(3, 100);
         g.deal(g.pHand,1);
         assertEquals(1,g.pHand.size());
         assertEquals(13,g.pHand.get(0).getValue());
@@ -43,9 +40,9 @@ public class testGame {
 
         g.deal(g.pHand,5);
         assertEquals(6,g.pHand.size());
-    }
+    }*/
 
-    @Test
+   /* @Test
     public void testEmptyHand(){
         Game g = new Game();
         g.buildDeck(1);
@@ -92,64 +89,67 @@ public class testGame {
         g.pHand.add(new Card(10,Suit.Diamonds));
         int t3 = g.countCards(g.pHand);
         assertEquals(22,t3);
-    }
+    }*/
 
     @Test
     public void testTryBet(){
-        Game g = new Game();
+        Game g = new Game(3, 100);
 
         g.tryBet(101);
         assertEquals(true,g.errorFlag);
-        assertEquals(0,g.bet);
-        assertEquals(100,g.bank);
+        assertEquals(0,g.player.getBet());
+        assertEquals(0,g.dealer.getBet());
+        assertEquals(100,g.player.getBank());
 
         g.errorFlag = false;
 
         g.tryBet(5);
         assertEquals(false,g.errorFlag);
-        assertEquals(5,g.bet);
-        assertEquals(95,g.bank);
+        assertEquals(5,g.player.getBet());
+        assertEquals(5,g.dealer.getBet());
+        assertEquals(95,g.player.getBank());
     }
 
     @Test
     public void testTryDeal(){
-        Game g = new Game();
-        g.buildDeck(3);
+        Game g = new Game(3, 100);
 
         g.tryDeal();
-        assertEquals(true,g.pHand.size()==0);
-        assertEquals(0,g.pHand.size());
+        assertEquals(0,g.player.getHand().size());
 
         g.tryBet(3);
         g.tryDeal();
-        assertEquals(true,g.pHand.size()>0);
-        assertEquals(2,g.pHand.size());
+        assertEquals(2,g.player.getHand().size());
 
     }
 
     @Test
     public void testTryHit(){
-        Game g = new Game();
-        g.buildDeck(3);
+        Game g = new Game(3, 100);
 
         g.tryHit();
-        assertEquals(true,g.pHand.size()==0);
+        assertEquals(true,g.player.getHand().size()==0);
 
         g.tryBet(3);
         g.tryHit();
-        assertEquals(true,g.pHand.size()==0);
+        assertEquals(true,g.player.getHand().size()==0);
 
         g.tryDeal();
         g.tryHit();
-        assertEquals(true,g.pHand.size()>0);
-        assertEquals(3,g.pHand.size());
+        assertEquals(3,g.player.getHand().size());
+
+        if(g.userMessage.equals("You bust")){
+            assertEquals(false, g.againDisabled);
+        }
+        else{
+            assertEquals(true, g.againDisabled);
+        }
     }
 
 
     @Test
     public void testNewHand(){
-        Game g = new Game();
-        g.buildDeck(3);
+        Game g = new Game(3, 100);
         g.pCCount = 23;
         g.newHand();
         assertEquals(false, g.errorFlag);
@@ -157,6 +157,7 @@ public class testGame {
         assertEquals(true,g.againDisabled);
     }
 
+    /*
     @Test
     public void testEndHand(){
         Game g = new Game();
@@ -169,17 +170,20 @@ public class testGame {
         assertEquals("User Lost", g.userMessage);
         assertEquals(true, g.dealDisabled);
     }
+    */
 
     @Test
     public void doubleDown(){
-        Game g = new Game();
-        g.buildDeck(3);
-        g.shuffle();
+        Game g = new Game(3, 100);
         g.tryBet(5);
         g.tryDeal();
         g.doubleDown();
-        assertEquals(10,g.bet);
-        assertEquals(3, g.pHand.size());
+        if(g.userMessage.equals("You bust")){
+            assertEquals(0, g.player.getBet());
+        } else{
+            assertEquals(10,g.player.getBet());
+        }
+        assertEquals(3, g.player.getHand().size());
     }
 
 
