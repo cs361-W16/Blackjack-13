@@ -76,16 +76,18 @@ public class Game {
     }
 
     //takes a number of cards from the top of the deck and puts it into a hand
+    /*
     public void deal(java.util.List<Card> hand, int numCards) {
         for (int i = 0; i < numCards; ++i)
             hand.add(removeTop(deck));
-    }
+    } */
 
     //empties the hand and puts all of the cards back into the deck
+    /*
     public void emptyHand(java.util.List<Card> hand) {
         while (hand.size() > 0)
             deck.add(removeTop(hand));
-    }
+    } */
 
     //will try to bet for the player
     //sets betError to true if it failed, false if it succeeded
@@ -129,6 +131,7 @@ public class Game {
     }
 
     //turns a cards rank into a blackjack value
+    /*
     public int generateVal(Card c) {
         int rank = c.getValue();
         if (rank >= 2 && rank <= 10)
@@ -139,9 +142,10 @@ public class Game {
             return 11; //A
 
         return -1; //error
-    }
+    } */
 
     //counts all of the cards in the hand and gets as close to 21 as possible
+    /*
     public int countCards(java.util.List<Card> hand) {
         int count = 0;
         int numAces = 0;
@@ -159,7 +163,7 @@ public class Game {
         }
 
         return count;
-    }
+    }  */
 
     public void tryHit() {
         if (pHand.size() > 0) {

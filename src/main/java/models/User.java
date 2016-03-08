@@ -7,10 +7,10 @@ import java.util.ArrayList;
  */
 public class User extends Person {
     public int bank = 100;
-    public int bet = 0;
 
-    User(){
-        this.Hand = new ArrayList<>();
+    Person(){
+        setBet(0);
+        setCardCount(0);
     }
 
     public void tryBet(int amount) {

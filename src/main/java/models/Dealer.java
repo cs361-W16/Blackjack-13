@@ -5,10 +5,11 @@ import java.util.ArrayList;
 /**
  * Created by vgrejuc on 3/7/16.
  */
-public class Dealer extends Person {
-    Dealer(){
-        this.Hand = new ArrayList<>();
-        this.cardCount = 0;
+public class Dealer extends Person{
+
+    public void deal(java.util.List<Card> hand, int numCards) {
+        for (int i = 0; i < numCards; ++i)
+            hand.add(removeTop(deck));
     }
 
     public void dealerTurn() {
