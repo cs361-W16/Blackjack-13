@@ -19,8 +19,6 @@ public class Game implements Serializable {
     public boolean errorFlag = false;
     public String userMessage = "Place your Bet";
 
-    public int pCCount = 0;
-    public int dCCount = 0;
     public boolean againDisabled = true;
     public boolean dealDisabled = false;
     public boolean hitDisabled = true;
@@ -32,17 +30,18 @@ public class Game implements Serializable {
 
 
 
-    public Game(int numDecks, int playerBank) {
-        this.player = new Player(playerBank);
+    public Game() {
+        this.player = new Player(100);
         this.dealer = new Dealer();
         this.deck = new ArrayList<>();
-        buildDeck(numDecks);
+        buildDeck(3);
         shuffle();
     }
 
+
     private void emptyHands(){
-        deck.addAll(dealer.emptyHand());
-        deck.addAll(player.emptyHand());
+        dealer.emptyHand(deck);
+        player.emptyHand(deck);
     }
 
     //Ranks go from 1 to 13. Aces are 1 and Kings are 13.
@@ -61,13 +60,13 @@ public class Game implements Serializable {
 
     private void dealerTurn() {
         deal(dealer.getHand(), 2);
-        while (countCards(dealer.getHand()) < 17) {
+        while (dealer.getCount() < 17) {
             deal(dealer.getHand(), 1);
         }
-        if (countCards(dealer.getHand()) > 21) {
+        if (dealer.getCount() > 21) {
             player.win();
             endHand("Dealer busts. You win!");
-        } else if (countCards(dealer.getHand()) > countCards(player.getHand())) {
+        } else if (dealer.getCount() > player.getCount()) {
             endHand("Dealer Wins");
         } else {
             endHand("You win!");
@@ -96,37 +95,6 @@ public class Game implements Serializable {
         return hand.remove(hand.size() - 1);
     }
 
-    private int generateVal(Card c) {
-        int rank = c.getValue();
-        if (rank >= 2 && rank <= 10)
-            return rank; //2-10
-        else if (rank >= 11 && rank <= 13)
-            return 10; //J,Q,K
-        else if (rank == 1)
-            return 11; //A
-
-        return -1; //error
-    }
-
-    private int countCards(java.util.List<Card> hand) {
-        int count = 0;
-        int numAces = 0;
-
-        for (int i = 0; i < hand.size(); ++i) {
-            int val = generateVal(hand.get(i));
-            if (val == 11)
-                numAces++;
-            count += val;
-        }
-
-        while (count > 21 && numAces > 0) {
-            count -= 10; //count-11+1 which turns Ace into a 1
-            numAces--;
-        }
-
-        return count;
-    }
-
 
     //will try to bet for the player
     //sets betError to true if it failed, false if it succeeded
@@ -139,6 +107,7 @@ public class Game implements Serializable {
             player.setBet(player.getBet() + amount);
             dealer.setBet(dealer.getBet() + amount);
         }
+        userMessage = "Place your bet";
     }
 
     //will try to deal 2 cards to the player if their bets are >=2
@@ -155,7 +124,6 @@ public class Game implements Serializable {
             return;
         } else {
             player.setHand(deal(player.getHand(), 2));
-            pCCount = countCards(player.getHand());
             if (player.getHand().get(0).getValue() == player.getHand().get(1).getValue()) {
                 splitDisabled = false;
             }
@@ -172,8 +140,7 @@ public class Game implements Serializable {
     public void tryHit() {
         if (player.getHand().size() > 0) {
             player.addCard(removeTop(deck));
-            pCCount = countCards(player.getHand());
-            if (pCCount > 21) {
+            if (player.getCount() > 21) {
                 endHand("You bust");
             } else {
                 againDisabled = true;
@@ -194,8 +161,7 @@ public class Game implements Serializable {
         player.setBet(player.getBet() * 2);
         dealer.setBet(dealer.getBet() * 2);
         player.setHand(deal(player.getHand(), 1));
-        pCCount = countCards(player.getHand());
-        if (pCCount > 21) {
+        if (player.getCount() > 21) {
             endHand("You bust");
         } else {
             dealerTurn();
@@ -214,12 +180,10 @@ public class Game implements Serializable {
 
     //Resets all variables except money and deck
     public void newHand() {
-        player.setBet(0);
-        dealer.setBet(0);
+        player.resetBet();
+        dealer.resetBet();
         errorFlag = false;
         userMessage = "Place your Bet";
-        pCCount = 0;
-        dCCount = 0;
         againDisabled = true;
         dealDisabled = false;
         hitDisabled = true;

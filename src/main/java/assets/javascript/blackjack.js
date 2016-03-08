@@ -16,8 +16,8 @@ function display(game){
         $("#userCards").append(cardDiv);
     }
     //Show player Card Counting Total if greater than zero
-    if(game.pCCount > 0){
-        $("#userCardTotal").html(game.pCCount);
+    if(game.player.count > 0){
+        $("#userCardTotal").html(game.player.count);
     } else{
         $("#userCardTotal").html("");
     }
@@ -31,8 +31,8 @@ function display(game){
          $("#dealerCards").append(cardDiv);
      }
      //Show dealer Card counting total if greater than zero
-     if(game.dCCount > 0){
-             $("#dealerCardTotal").html(game.dCCount);
+     if(game.dealer.count > 0){
+             $("#dealerCardTotal").html(game.dealer.count);
          } else{
              $("#dealerCardTotal").html("");
          }

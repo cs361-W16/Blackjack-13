@@ -68,14 +68,6 @@ public class ApiControllerDocTesterTest extends NinjaDocTester {
         assertThat(response.payload, containsString("Blackjack"));
     }
 
-    @Test
-    public void testBlackjackBet(){
-        Game g = new Game(3, 100);
-        Response response = makeRequest(
-                Request.POST().url(testServerUrl().path("/bet/200")).contentTypeApplicationJson().payload(g));
-        assertThat(response.payload, containsString("You cannot bet more money than you have in the bank"));
-
-    }
 
 
 }

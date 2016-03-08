@@ -11,7 +11,7 @@ public class testGame {
 
     @Test
     public void testGameCreation(){
-        Game g = new Game(3, 100);
+        Game g = new Game();
         assertNotNull(g);
     }
     /*
@@ -25,7 +25,7 @@ public class testGame {
 
     @Test
     public void testGameInit(){
-        Game g = new Game(3, 100);
+        Game g = new Game();
         assertEquals(g.player.getBank(), 100);
     }
     /*
@@ -93,7 +93,7 @@ public class testGame {
 
     @Test
     public void testTryBet(){
-        Game g = new Game(3, 100);
+        Game g = new Game();
 
         g.tryBet(101);
         assertEquals(true,g.errorFlag);
@@ -112,7 +112,7 @@ public class testGame {
 
     @Test
     public void testTryDeal(){
-        Game g = new Game(3, 100);
+        Game g = new Game();
 
         g.tryDeal();
         assertEquals(0,g.player.getHand().size());
@@ -125,7 +125,7 @@ public class testGame {
 
     @Test
     public void testTryHit(){
-        Game g = new Game(3, 100);
+        Game g = new Game();
 
         g.tryHit();
         assertEquals(true,g.player.getHand().size()==0);
@@ -149,11 +149,14 @@ public class testGame {
 
     @Test
     public void testNewHand(){
-        Game g = new Game(3, 100);
-        g.pCCount = 23;
+        Game g = new Game();
+        g.player.addCard(new Card(10, Suit.Clubs));
+        g.player.addCard(new Card(10, Suit.Diamonds));
+        g.player.addCard(new Card(3, Suit.Spades));
+        assertEquals(g.player.getCount(), 23);
         g.newHand();
         assertEquals(false, g.errorFlag);
-        assertEquals(0, g.pCCount);
+        assertEquals(0, g.player.getCount());
         assertEquals(true,g.againDisabled);
     }
 
@@ -174,15 +177,11 @@ public class testGame {
 
     @Test
     public void doubleDown(){
-        Game g = new Game(3, 100);
+        Game g = new Game();
         g.tryBet(5);
         g.tryDeal();
         g.doubleDown();
-        if(g.userMessage.equals("You bust")){
-            assertEquals(0, g.player.getBet());
-        } else{
-            assertEquals(10,g.player.getBet());
-        }
+        assertEquals(10,g.player.getBet());
         assertEquals(3, g.player.getHand().size());
     }
 

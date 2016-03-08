@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * Created by vgrejuc on 3/7/16.
  */
-public class Dealer extends Person {
+public class Dealer extends Person implements Serializable{
 
     public Dealer(){
         super();

@@ -1,6 +1,9 @@
 package models;
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 /**
  * Created by Jacob on 3/7/2016.
@@ -12,7 +15,8 @@ public class testPlayer {
         Player p = new Player(100);
         p.addCard(new Card(8, Suit.Diamonds));
         assertEquals(p.getHand().size(), 1);
-        java.util.List<Card> temp = p.emptyHand();
+        java.util.List<Card> temp = new ArrayList<>();
+        p.emptyHand(temp);
         assertEquals(p.getHand().size(), 0);
         assertEquals(temp.get(0).getSuit(), Suit.Diamonds );
     }
