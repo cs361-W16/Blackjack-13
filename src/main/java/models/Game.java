@@ -26,7 +26,7 @@ public class Game implements Serializable {
     public boolean splitDisabled = true;
     public boolean doubleDisabled = true;
     public boolean bettingDisabled = false;
-    
+
 
 
 
@@ -77,6 +77,8 @@ public class Game implements Serializable {
                 player.win();
             }
         }
+        standDisabled = true;
+
     }
 
     private void shuffle() {
@@ -150,6 +152,7 @@ public class Game implements Serializable {
             errorFlag = true;
             userMessage = "You must get your initial hand dealt before you can stand";
         }
+
 
     }
 
