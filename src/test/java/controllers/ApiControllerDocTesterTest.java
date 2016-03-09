@@ -17,6 +17,7 @@
 package controllers;
 
 
+import models.Game;
 import org.junit.Test;
 
 import ninja.NinjaDocTester;
@@ -30,6 +31,7 @@ public class ApiControllerDocTesterTest extends NinjaDocTester {
     
     String URL_INDEX = "/";
     String URL_HELLO_WORLD_JSON = "/hello_world.json";
+    String URL_BLACKJACK = "/blackjack";
     
     @Test
     public void testGetIndex() {
@@ -58,5 +60,14 @@ public class ApiControllerDocTesterTest extends NinjaDocTester {
 
     
     }
+
+    @Test
+    public void testBlackjack(){
+        Response response = makeRequest(
+                Request.GET().url(testServerUrl().path(URL_BLACKJACK)));
+        assertThat(response.payload, containsString("Blackjack"));
+    }
+
+
 
 }

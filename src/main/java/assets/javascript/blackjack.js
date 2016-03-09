@@ -10,14 +10,14 @@ function display(game){
     //First remove all user card divs from view
     $("#userCards").html("");
     //Iteratively add users cards from game.pHand
-    for(i=0;i<game.pHand.length;i++){
-        card = game.pHand[i];
+    for(i=0;i<game.player.hand.length;i++){
+        card = game.player.hand[i];
         cardDiv = "<div><img src='/assets/cards/" + card.value + card.suit.charAt(0).toLowerCase() + ".png'></div>";
         $("#userCards").append(cardDiv);
     }
     //Show player Card Counting Total if greater than zero
-    if(game.pCCount > 0){
-        $("#userCardTotal").html(game.pCCount);
+    if(game.player.count > 0){
+        $("#userCardTotal").html(game.player.count);
     } else{
         $("#userCardTotal").html("");
     }
@@ -25,22 +25,22 @@ function display(game){
     //Rebuild Dealer Hand
      $("#dealerCards").html("");
      //Iteratively add users cards from game.dHand
-     for(i=0;i<game.dHand.length;i++){
-         card = game.dHand[i];
+     for(i=0;i<game.dealer.hand.length;i++){
+         card = game.dealer.hand[i];
          cardDiv = "<div><img src='/assets/cards/" + card.value + card.suit.charAt(0).toLowerCase() + ".png'></div>";
          $("#dealerCards").append(cardDiv);
      }
      //Show dealer Card counting total if greater than zero
-     if(game.dCCount > 0){
-             $("#dealerCardTotal").html(game.dCCount);
+     if(game.dealer.count > 0){
+             $("#dealerCardTotal").html(game.dealer.count);
          } else{
              $("#dealerCardTotal").html("");
          }
 
      //Display Money
-     $("#userMoney").html("$" + game.bank.toString());
-     $("#userBetAmount").html("$" + game.bet.toString());
-     $("#dealerBetAmount").html("$" + game.bet.toString());
+     $("#userMoney").html("$" + game.player.bank.toString());
+     $("#userBetAmount").html("$" + game.player.bet.toString());
+     $("#dealerBetAmount").html("$" + game.dealer.bet.toString());
 
      //Disable required buttons
      $("#playAgain").prop("disabled",game.againDisabled);
@@ -62,22 +62,6 @@ function display(game){
 }
 
 
-function dealerTurn(game){
-     $("#dalerCards").html("");
-     //Iteratively add users cards from game.pHand
-     for(i=0;i<game.dHand.length;i++){
-         card = game.dHand[i];
-         cardDiv = "<div><img src='/assets/cards/" + card.value + card.suit.charAt(0).toLowerCase() + ".png'></div>";
-         $("#dealerCards").append(cardDiv);
-     }
-     if(game.playerWin == true){
-        $("#userMsg").html("You Won!");
-     } else{
-        $("#userMsg").html("You Lost");
-     }
-
-     $("#dealerCardTotal").html(game.dCCount);
-}
 
 
 $("#deal").click(function(){
