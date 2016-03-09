@@ -79,8 +79,9 @@ body{
     letter-spacing: 10px;
 }
 
-#user{
-    margin: 10 auto;
+#user, #userHandTwo{
+    margin: 0 auto;
+    display:inline-block;
     padding:3px;
     width:520px;
     #height:400px;
@@ -88,15 +89,19 @@ body{
     box-shadow: 0 0 10px; #888888;
     border-radius: 10px;
 }
-#userMsg{
+#userHandTwo{
+    vertical-align:top;
+    display:none;
+}
+#userMsg, #userMsgTwo{
     height:40px;
     font-weight:bold;
     font-size:20pt;
 }
-#userCardArea{
+#userCardArea, #userCardAreaTwo{
     height:200px;
 }
-#userCards{
+#userCards,  #userCardsTwo{
     display:table;
     table-layout:fixed;
     position:relative;
@@ -106,22 +111,22 @@ body{
     transform: translateY(-60%);
     right:25px;
 }
-#userCards > div{
+#userCards > div, #userCardsTwo > div{
     display:table-cell;
 }
-#userCards > div > img{
+#userCards > div > img, #userCardsTwo > div > img{
     display:block;
     height:150px;
     width:100px;
 }
-#userCardTotal{
+#userCardTotal, #userCardTotalTwo{
     transform:translateY(95%);
     display:inline-block;
     width:50px;
     background-color: black;
     color: white;
 }
-#userActions > button{
+#userActions > button, #userActionsTwo > button{
     width:60px;
     height:60px;
     border-radius:8px;
@@ -129,18 +134,14 @@ body{
     outline:none;
     vertical-align:top;
 }
-#userActions > button:hover{
+#userActions > button:hover, #userActionsTwo > button:hover{
     cursor:hand;
-}
-#userMoneyDiv{
-    margin:15px;
 }
 
 #userBank{
-    position:relative;
-    right:80px;
-    height:55px;
+    display:inline-block;
     width:120px;
+    height:55px;
     border: solid 2px;
     display:inline-block;
     border-radius:10px;
@@ -151,25 +152,30 @@ body{
     font-size:20px;
 }
 
-#userCurrentBet{
-    position:relative;
-    left:80px;
+#userCurrentBet, #userCurrentBetTwo{
+    display:inline-block;
     width:120px;
     height:55px;
     border: solid 2px;
     border-radius:10px;
+    margin: 2 auto;
+}
+#userCurrentBetTwo{
+    display:none;
+}
+#userBetAmount, #userBetAmountTwo{
+    display:block;
+    font-size:20px;
+}
+#userBettingArea{
+    background-color:green;
+    box-shadow: 0 0 10px; #888888;
+    width:520px;
+    margin: 10 auto;
+}
+#userBetButtons{
     display:inline-block;
 }
-#userBet{
-    display:block;
-    #font-weight:bold;
-    font-size:20px;
-}
-#userBetAmount{
-    display:block;
-    font-size:20px;
-}
-
 #userBetButtons > label{
     display:block;
     font-weight:bold;
