@@ -24,8 +24,8 @@ public class Player extends Person implements Serializable{
     }
     public int getBank(){ return bank;    }
 
-    public void win(){
-        this.bank += this.bet * 2;
-    }
+    public void win(){ this.bank += this.bet * 2; }
+
+    public void winBlackJack(){ this.bank += this.bet * 2.5; }
 
 }

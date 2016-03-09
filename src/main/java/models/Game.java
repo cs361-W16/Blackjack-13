@@ -26,6 +26,7 @@ public class Game implements Serializable {
     public boolean splitDisabled = true;
     public boolean doubleDisabled = true;
     public boolean bettingDisabled = false;
+    public boolean dealerShow = false;
 
 
 
@@ -70,7 +71,11 @@ public class Game implements Serializable {
             endHand("Dealer Wins");
         } else {
             endHand("You win!");
-            player.win();
+            if(player.getCount() == 21 && player.getHand().size() == 2){
+                player.winBlackJack();
+            } else {
+                player.win();
+            }
         }
     }
 
@@ -136,6 +141,17 @@ public class Game implements Serializable {
         }
     }
 
+
+    public void tryStand() {
+        //Probably unnecessary check until we have split functionality
+        if(player.getHand().size() > 0){
+            dealerTurn();
+        } else{
+            errorFlag = true;
+            userMessage = "You must get your initial hand dealt before you can stand";
+        }
+
+    }
 
     public void tryHit() {
         if (player.getHand().size() > 0) {
