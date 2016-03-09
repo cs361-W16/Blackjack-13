@@ -26,7 +26,7 @@ public class Game implements Serializable {
     public boolean splitDisabled = true;
     public boolean doubleDisabled = true;
     public boolean bettingDisabled = false;
-    public boolean dealerShow = false;
+    
 
 
 
