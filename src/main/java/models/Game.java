@@ -107,7 +107,7 @@ public class Game implements Serializable {
             player.setBet(player.getBet() + amount);
             dealer.setBet(dealer.getBet() + amount);
         }
-        userMessage = "Place your bet";
+        userMessage = "Place your Bet";
     }
 
     //will try to deal 2 cards to the player if their bets are >=2
