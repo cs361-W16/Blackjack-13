@@ -6,8 +6,8 @@
     <title>Blackjack</title>
 </head>
 <body>
-<label class="label1">Dealer</label>
 <div id="dealer">
+    <label class="label1">Dealer</label>
     <div id="dealerCardArea">
         <div id="dealerCards">
         </div>
@@ -43,26 +43,45 @@
         <button id="split" disabled="true">Split</button>
         <button id="doubleDown" disabled="true">Double Down</button>
     </div>
+</div>
+<div id="userHandTwo" display="none">
+    <div id="userMsgTwo">
+        Place Your Bet
+    </div>
 
-    <div id="userBettingArea">
-        <div id="userMoneyDiv">
-            <div id="userBank">
-                <label class="label2">Bank</label>
-                <label class="label2" id="userMoney">$100</label>
-            </div>
-            <div id="userCurrentBet">
-                <label class="label2">Bet</label>
-                <label class="label2" id="userBetAmount">$0</label>
-            </div>
+    <div id="userCardAreaTwo">
+        <div id="userCardsTwo">
         </div>
-        <div id="userBetButtons">
-            <label class="label2">Bet</label>
-            <button id="bet1" onclick="userBetFun(1)">1</button>
-            <button id="bet5" onclick="userBetFun(5)">5</button>
-            <button id="bet10" onclick="userBetFun(10)">10</button>
-            <button id="bet25" onclick="userBetFun(25)">25</button>
-            <button id="bet50" onclick="userBetFun(50)">50</button>
-        </div>
+        <div id="userCardTotalTwo"></div>
+    </div>
+
+    <div id="userActionsTwo">
+        <button id="playAgainTwo" disabled="true">Play Again</button>
+        <button id="dealTwo">Deal</button>
+        <button id="hitTwo" disabled="true">Hit</button>
+        <button id="standTwo">Stand</button>
+        <button id="doubleDownTwo" disabled="true">Double Down</button>
+    </div>
+</div>
+<div id="userBettingArea">
+    <div id="userCurrentBet">
+        <label class="label2">Bet</label>
+        <label class="label2" id="userBetAmount">$0</label>
+    </div>
+    <div id="userBank">
+        <label class="label2">Bank</label>
+        <label class="label2" id="userMoney">$100</label>
+    </div>
+    <div id="userCurrentBetTwo" display="none">
+        <label class="label2">Bet</label>
+        <label class="label2" id="userBetAmountTwo">$0</label>
+    </div>
+    <div id="userBetButtons">
+        <button id="bet1" onclick="userBetFun(1)">1</button>
+        <button id="bet5" onclick="userBetFun(5)">5</button>
+        <button id="bet10" onclick="userBetFun(10)">10</button>
+        <button id="bet25" onclick="userBetFun(25)">25</button>
+        <button id="bet50" onclick="userBetFun(50)">50</button>
     </div>
 </div>
 <script type="text/javascript" src="/assets/javascript/blackjack.js"></script>
