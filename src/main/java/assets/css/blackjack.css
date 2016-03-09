@@ -18,7 +18,9 @@ body{
     font-size:20px;
     font-weight:bold;
 }
+
 #dealer{
+    position:relative;
     height:240px;
     margin:auto;
     padding:3px;
@@ -35,18 +37,26 @@ body{
     width:20%;
     margin:4 auto;
     top:50%;
-    right:25px;
+    right:15px;
 }
 #dealerCards > div > img{
     display:block;
-    height:150px;
-    width:100px;
+    width:80px;
     border-radius:6px;
 }
 #dealerCards > div{
     display:table-cell;
 }
+#dealerCardTotal{
+    display:inline-block;
+    width:50px;
+    background-color: black;
+    color: white;
+}
 #dealerBet{
+    position:absolute;
+    left:200px;
+    bottom:5px;
     height:50px;
     width:120px;
     border: solid 2px;
@@ -68,8 +78,9 @@ body{
     letter-spacing: 10px;
 }
 
-#user{
-    margin: 10 auto;
+#user, #userHandTwo{
+    margin: 0 auto;
+    display:inline-block;
     padding:3px;
     width:520px;
     #height:400px;
@@ -77,58 +88,55 @@ body{
     box-shadow: 0 0 10px; #888888;
     border-radius: 10px;
 }
-#userMsg{
+#userHandTwo{
+    vertical-align:top;
+    display:none;
+}
+#userMsg, #userMsgTwo{
     height:40px;
     font-weight:bold;
     font-size:20pt;
 }
 #userCardArea{
-    height:200px;
+    height:150px;
 }
-#userCards{
+#userCards,  #userCardsTwo{
+    position:relative;
     display:table;
     table-layout:fixed;
-    position:relative;
     width:20%;
     margin:4 auto;
-    top:50%;
-    transform: translateY(-60%);
-    right:25px;
+    right:10px;
 }
-#userCards > div{
+#userCards > div, #userCardsTwo > div{
     display:table-cell;
 }
-#userCards > div > img{
+#userCards > div > img, #userCardsTwo > div > img{
     display:block;
-    height:150px;
-    width:100px;
+    width:80px;
 }
-#userCardTotal{
-    transform:translateY(95%);
-    display:inline-block;
+#userCardTotal, #userCardTotalTwo{
     width:50px;
+    margin: 5 auto;
     background-color: black;
     color: white;
 }
-#userActions > button{
-    width:70px;
-    height:70px;
+#userActions > button, #userActionsTwo > button{
+    width:60px;
+    height:50px;
     border-radius:8px;
-    margin: 0px 30px;
+    margin: 0px 10px;
     outline:none;
+    vertical-align:top;
 }
-#userActions > button:hover{
+#userActions > button:hover, #userActionsTwo > button:hover{
     cursor:hand;
-}
-#userMoneyDiv{
-    margin:15px;
 }
 
 #userBank{
-    position:relative;
-    right:80px;
-    height:55px;
+    display:inline-block;
     width:120px;
+    height:55px;
     border: solid 2px;
     display:inline-block;
     border-radius:10px;
@@ -139,32 +147,37 @@ body{
     font-size:20px;
 }
 
-#userCurrentBet{
-    position:relative;
-    left:80px;
+#userCurrentBet, #userCurrentBetTwo{
+    display:inline-block;
     width:120px;
     height:55px;
     border: solid 2px;
     border-radius:10px;
+    margin: 2 auto;
+}
+#userCurrentBetTwo{
+    display:none;
+}
+#userBetAmount, #userBetAmountTwo{
+    display:block;
+    font-size:20px;
+}
+#userBettingArea{
+    background-color:green;
+    box-shadow: 0 0 10px; #888888;
+    width:520px;
+    margin: 10 auto;
+}
+#userBetButtons{
     display:inline-block;
 }
-#userBet{
-    display:block;
-    #font-weight:bold;
-    font-size:20px;
-}
-#userBetAmount{
-    display:block;
-    font-size:20px;
-}
-
 #userBetButtons > label{
     display:block;
     font-weight:bold;
 }
 #userBetButtons > button{
-    width:70px;
-    height:70px;
+    width:60px;
+    height:60px;
     border-radius:35px;
     font-weight:bold;
     margin:5px 10px;

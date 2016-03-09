@@ -40,8 +40,6 @@ public class ApplicationController {
 
     public Result gameGet(){
         Game g = new Game();
-        g.buildDeck(3);
-        g.shuffle();
 
         return Results.json().render(g);
     }
@@ -58,12 +56,22 @@ public class ApplicationController {
         return Results.json().render(g);
     }
 
-    public Result playerLostPost(Context context, Game g){
-        g.playerLost();
 
+    public Result dealPost(Context context, Game g){
+        g.tryDeal();
+        return  Results.json().render(g);
+    }
+
+    public Result newHand(Context context, Game g){
+        g.newHand();
         return Results.json().render(g);
     }
-    
+
+    public Result doubleDown(Context context, Game g){
+        g.doubleDown();
+        return  Results.json().render(g);
+    }
+
     public Result helloWorldJson() {
         
         SimplePojo simplePojo = new SimplePojo();
