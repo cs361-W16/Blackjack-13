@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by michaelhilton on 1/25/16.
+ * Modified by Team 13 for BlackJack
  */
 public class testGame {
 
@@ -186,5 +187,19 @@ public class testGame {
     }
 
 
+    @Test
+    public void testTryStand(){
+        Game g = new Game();
+        g.player.addCard(new Card(10, Suit.Hearts));
+        g.dealer.addCard(new Card(10, Suit.Clubs));
+        g.dealer.addCard(new Card(10, Suit.Diamonds));
+        assertEquals(g.dealer.getCount(), 20);
+        g.dealer.addCard(new Card(10, Suit.Spades));
+        assertEquals(g.dealer.getCount(), 30);
 
+        g.tryStand();
+        assertEquals(false, g.errorFlag);
+        assertNotSame(0, g.dealer.getCount());
+
+    }
 }

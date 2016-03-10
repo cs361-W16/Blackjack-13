@@ -30,6 +30,7 @@ public class Game implements Serializable {
 
 
 
+
     public Game() {
         this.player = new Player(100);
         this.dealer = new Dealer();
@@ -70,8 +71,14 @@ public class Game implements Serializable {
             endHand("Dealer Wins");
         } else {
             endHand("You win!");
-            player.win();
+            if(player.getCount() == 21 && player.getHand().size() == 2){
+                player.winBlackJack();
+            } else {
+                player.win();
+            }
         }
+        standDisabled = true;
+
     }
 
     private void shuffle() {
@@ -136,6 +143,18 @@ public class Game implements Serializable {
         }
     }
 
+
+    public void tryStand() {
+        //Probably unnecessary check until we have split functionality
+        if(player.getHand().size() > 0){
+            dealerTurn();
+        } else{
+            errorFlag = true;
+            userMessage = "You must get your initial hand dealt before you can stand";
+        }
+
+
+    }
 
     public void tryHit() {
         if (player.getHand().size() > 0) {

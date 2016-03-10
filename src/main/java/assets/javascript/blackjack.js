@@ -93,6 +93,21 @@ $("#hit").click(function(){
             });
 });
 
+$("#stand").click(function(){
+            $.ajax({
+               type: "POST",
+               url: "/stand",
+               data: JSON.stringify(game),
+               success: function(data, status){
+               //Display game data
+               display(data);
+               game = data;
+               },
+               contentType:"application/json; charset=utf-8",
+               dataType:"json",
+            });
+});
+
 $("#playAgain").click(function(){
         $.ajax({
                   type: "POST",

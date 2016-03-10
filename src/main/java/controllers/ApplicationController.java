@@ -56,6 +56,12 @@ public class ApplicationController {
         return Results.json().render(g);
     }
 
+    public Result standPost(Context context, Game g){
+        g.tryStand();
+
+        return Results.json().render(g);
+    }
+
 
     public Result dealPost(Context context, Game g){
         g.tryDeal();
