@@ -70,6 +70,7 @@ public class ApplicationController {
 
     public Result newHand(Context context, Game g){
         g.newHand();
+        g.shuffle();
         return Results.json().render(g);
     }
 

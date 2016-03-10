@@ -26,6 +26,7 @@ public class Game implements Serializable {
     public boolean splitDisabled = true;
     public boolean doubleDisabled = true;
     public boolean bettingDisabled = false;
+    public boolean previousTie = false;
 
 
 
@@ -67,6 +68,18 @@ public class Game implements Serializable {
         if (dealer.getCount() > 21) {
             player.win();
             endHand("Dealer busts. You win!");
+        } else if (dealer.getCount() == player.getCount()) {
+            //Start new hand with same bet
+            errorFlag = false;
+            userMessage = "Tie! New Hand";
+            againDisabled = true;
+            dealDisabled = false;
+            hitDisabled = true;
+            splitDisabled = true;
+            standDisabled = true;
+            doubleDisabled = true;
+            bettingDisabled = true;
+            previousTie = true;
         } else if (dealer.getCount() > player.getCount()) {
             endHand("Dealer Wins");
         } else {
@@ -81,7 +94,7 @@ public class Game implements Serializable {
 
     }
 
-    private void shuffle() {
+    public void shuffle() {
         long seed = System.nanoTime();
         Collections.shuffle(deck, new Random(seed));
     }
@@ -121,6 +134,11 @@ public class Game implements Serializable {
     //keeps stillBet true if it failed, sets to false if it succeeded
 
     public void tryDeal() {
+        if(previousTie){
+            previousTie = false;
+            emptyHands();
+            shuffle();
+        }
         if (player.getBet() < 2) {
             errorFlag = true;
             userMessage = "You must bet a minimum of $2";
@@ -134,6 +152,7 @@ public class Game implements Serializable {
             if (player.getHand().get(0).getValue() == player.getHand().get(1).getValue()) {
                 splitDisabled = false;
             }
+            userMessage = "Hit or Stand";
             dealDisabled = true;
             againDisabled = true;
             doubleDisabled = false;
