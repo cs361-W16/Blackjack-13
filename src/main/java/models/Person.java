@@ -32,7 +32,7 @@ public abstract class Person implements Serializable {
         return Hand;
     }
 
-    private Card removeTop() {
+    public Card removeTop() {
         return this.Hand.remove(this.Hand.size() - 1);
     }
 
@@ -69,7 +69,7 @@ public abstract class Person implements Serializable {
         return -1; //error
     }
 
-    private int countCards(java.util.List<Card> hand) {
+    protected int countCards(java.util.List<Card> hand) {
         int count = 0;
         int numAces = 0;
 

@@ -55,6 +55,29 @@ public class ApplicationController {
 
         return Results.json().render(g);
     }
+    public Result splitPost(Context context, Game g){
+        g.split();
+
+        return Results.json().render(g);
+    }
+
+    public Result hitTwoPost(Context context, Game g){
+        g.hitTwo();
+
+        return Results.json().render(g);
+    }
+
+    public Result standTwoPost(Context context, Game g){
+        g.standTwo();
+
+        return Results.json().render(g);
+    }
+
+    public Result doubleDownTwoPost(Context context, Game g){
+        g.doubleDownTwo();
+
+        return Results.json().render(g);
+    }
 
     public Result standPost(Context context, Game g){
         g.tryStand();
