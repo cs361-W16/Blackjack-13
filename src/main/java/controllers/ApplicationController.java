@@ -40,7 +40,7 @@ public class ApplicationController {
 
     public Result gameGet(){
         Game g = new Game();
-
+        g.shuffle();
         return Results.json().render(g);
     }
 
