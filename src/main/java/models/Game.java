@@ -325,7 +325,7 @@ public class Game implements Serializable {
         if(hasSplit && (!secondStand)){
                 againDisabled = true;
                 firstStand = true;
-            } else if (hasSplit && secondStand){
+        } else if (hasSplit && secondStand){
             player.emptySecondHand(deck);
             shuffle();
         }
