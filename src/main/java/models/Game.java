@@ -43,7 +43,6 @@ public class Game implements Serializable {
         this.dealer = new Dealer();
         this.deck = new ArrayList<>();
         buildDeck(3);
-        shuffle();
     }
 
 
