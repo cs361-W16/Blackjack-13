@@ -114,7 +114,7 @@ public class testGame {
     @Test
     public void testTryDeal(){
         Game g = new Game();
-        Player p = new Player();
+
         g.tryDeal();
         assertEquals(0,g.player.getHand().size());
 
