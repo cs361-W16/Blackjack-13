@@ -72,4 +72,12 @@ public class testPlayer {
         assertEquals(0, p.getSecondHand().size());
         assertEquals(0, p.getSecondCount());
     }
+
+    @Test
+    public void testWin(){
+        Player p = new Player(104);
+
+        p.win(2);
+        assertTrue(p.getBank() == 104);
+    }
 }

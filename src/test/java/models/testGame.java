@@ -42,8 +42,8 @@ public class testGame {
         g.deal(g.pHand,5);
         assertEquals(6,g.pHand.size());
     }*/
-
-   /* @Test
+    /*
+    @Test
     public void testEmptyHand(){
         Game g = new Game();
         g.buildDeck(1);
@@ -57,7 +57,7 @@ public class testGame {
 
     @Test
     public void testGenerateVal(){
-        Game g = new Game();
+        Person g = new Person();
 
         int t1 = g.generateVal(new Card(5,Suit.Clubs));
         assertEquals(5,t1);
@@ -114,7 +114,7 @@ public class testGame {
     @Test
     public void testTryDeal(){
         Game g = new Game();
-
+        Player p = new Player();
         g.tryDeal();
         assertEquals(0,g.player.getHand().size());
 
@@ -122,6 +122,9 @@ public class testGame {
         g.tryDeal();
         assertEquals(2,g.player.getHand().size());
 
+        g.previousTie = true;
+        g.tryDeal();
+        assertFalse(g.previousTie);
     }
 
     @Test
@@ -163,20 +166,6 @@ public class testGame {
         assertEquals(0, g.player.getSecondHand().size());
     }
 
-    /*
-    @Test
-    public void testEndHand(){
-        Game g = new Game();
-        g.buildDeck(3);
-        g.tryBet(3);
-        g.pHand.add(new Card(3,Suit.Hearts));
-        g.pHand.add(new Card(6, Suit.Clubs));
-        g.endHand("User Lost");
-
-        assertEquals("User Lost", g.userMessage);
-        assertEquals(true, g.dealDisabled);
-    }
-    */
 
     @Test
     public void testDoubleDown(){
@@ -245,15 +234,24 @@ public class testGame {
     }
 
     @Test
-    public void testDoubleDownTwo(){
+    public void testDoubleDownTwo() {
         Game g = new Game();
         g.player.setBetTwo(5);
         g.doubleDownTwo();
         assertEquals(1, g.player.getSecondHand().size());
-        for(int i = 0; i < 2; ++i)
+        for (int i = 0; i < 2; ++i)
             g.player.addSecondHandCard(new Card(13, Suit.Spades));
         g.doubleDownTwo();
         String msg = "You bust";
         assertEquals(true, msg.equals(g.userMessageTwo));
+    }
+
+    @Test
+    public void testEndSecondHand(){
+        Game g = new Game();
+        g.firstStand = true;
+        g.endSecondHand("g");
+        assertFalse(g.againDisabled);
+        assertFalse(g.hasSplit);
     }
 }
