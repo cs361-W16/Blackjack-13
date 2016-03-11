@@ -27,7 +27,7 @@ public class Routes implements ApplicationRoutes {
     @Override
     public void init(Router router) {  
         
-        router.GET().route("/").with(ApplicationController.class, "index");
+        router.GET().route("/").with(ApplicationController.class, "blackjack");
         router.GET().route("/hello_world.json").with(ApplicationController.class, "helloWorldJson");
         router.GET().route("/blackjack").with(ApplicationController.class, "blackjack");
 
@@ -35,9 +35,14 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/bet/{amount}").with(ApplicationController.class, "betPost");
         router.POST().route("/deal").with(ApplicationController.class, "dealPost");
         router.POST().route("/hit").with(ApplicationController.class, "hitPost");
+        router.POST().route("/stand").with(ApplicationController.class, "standPost");
         router.POST().route("/newHand").with(ApplicationController.class, "newHand");
         router.POST().route("/doubleDown").with(ApplicationController.class, "doubleDown");
- 
+        router.POST().route("/split").with(ApplicationController.class, "splitPost");
+        router.POST().route("/hitTwo").with(ApplicationController.class, "hitTwoPost");
+        router.POST().route("/standTwo").with(ApplicationController.class, "standTwoPost");
+        router.POST().route("/doubleDownTwo").with(ApplicationController.class, "doubleDownTwoPost");
+
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)
         ///////////////////////////////////////////////////////////////////////    

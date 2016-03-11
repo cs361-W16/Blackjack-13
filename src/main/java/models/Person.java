@@ -22,17 +22,17 @@ public abstract class Person implements Serializable {
 
     //Getter methods
     public int getBet(){
-        return this.bet;
+        return bet;
     }
 
 
-    public int getCount(){return this.count;}
+    public int getCount(){return count;}
 
     public java.util.List<Card> getHand(){
-        return this.Hand;
+        return Hand;
     }
 
-    private Card removeTop() {
+    public Card removeTop() {
         return this.Hand.remove(this.Hand.size() - 1);
     }
 
@@ -69,7 +69,7 @@ public abstract class Person implements Serializable {
         return -1; //error
     }
 
-    private int countCards(java.util.List<Card> hand) {
+    protected int countCards(java.util.List<Card> hand) {
         int count = 0;
         int numAces = 0;
 

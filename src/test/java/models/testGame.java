@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by michaelhilton on 1/25/16.
+ * Modified by Team 13 for BlackJack
  */
 public class testGame {
 
@@ -154,10 +155,12 @@ public class testGame {
         g.player.addCard(new Card(10, Suit.Diamonds));
         g.player.addCard(new Card(3, Suit.Spades));
         assertEquals(g.player.getCount(), 23);
+        g.player.addSecondHandCard(new Card(3, Suit.Hearts));
         g.newHand();
         assertEquals(false, g.errorFlag);
         assertEquals(0, g.player.getCount());
         assertEquals(true,g.againDisabled);
+        assertEquals(0, g.player.getSecondHand().size());
     }
 
     /*
@@ -176,15 +179,81 @@ public class testGame {
     */
 
     @Test
-    public void doubleDown(){
+    public void testDoubleDown(){
         Game g = new Game();
         g.tryBet(5);
         g.tryDeal();
+        g.player.emptyHand(g.deck);
+        g.player.addCard(new Card(5, Suit.Hearts));
+        g.player.addCard(new Card(6, Suit.Clubs));
         g.doubleDown();
         assertEquals(10,g.player.getBet());
         assertEquals(3, g.player.getHand().size());
+        g.player.addCard(new Card(13, Suit.Spades));
+        g.doubleDown();
+        assertEquals(true, g.player.getCount() > 21);
     }
 
 
+    @Test
+    public void testTryStand(){
+        Game g = new Game();
+        g.player.addCard(new Card(10, Suit.Hearts));
+        g.dealer.addCard(new Card(10, Suit.Clubs));
+        g.dealer.addCard(new Card(10, Suit.Diamonds));
+        assertEquals(g.dealer.getCount(), 20);
+        g.dealer.addCard(new Card(10, Suit.Spades));
+        assertEquals(g.dealer.getCount(), 30);
 
+        g.tryStand();
+        assertEquals(false, g.errorFlag);
+        assertNotSame(0, g.dealer.getCount());
+
+    }
+
+    @Test
+    public void testSplit(){
+        Game g = new Game();
+        g.tryBet(5);
+        g.player.addCard(new Card(1, Suit.Diamonds));
+        g.player.addCard(new Card(1, Suit.Hearts));
+        g.split();
+        String msg = "Hit or Stand";
+        assertEquals(true, msg.equals(g.userMessage));
+        assertEquals(true, msg.equals(g.userMessageTwo));
+    }
+
+    @Test
+    public void testHitTwo(){
+        Game g = new Game();
+        g.hitTwo();
+        assertEquals(true, g.doubleDownTwoDisabled);
+        for(int i = 0; i < 4; ++i)
+            g.hitTwo();
+        assertEquals(true, g.secondStand);
+        String msg = "You bust";
+        assertEquals(true, msg.equals(g.userMessageTwo));
+    }
+
+    @Test
+    public void testStandTwo(){
+        Game g = new Game();
+        g.player.addSecondHandCard(new Card(10, Suit.Diamonds));
+        g.player.addSecondHandCard(new Card(1, Suit.Hearts));
+        g.standTwo();
+        assertEquals(true, g.secondStand);
+    }
+
+    @Test
+    public void testDoubleDownTwo(){
+        Game g = new Game();
+        g.player.setBetTwo(5);
+        g.doubleDownTwo();
+        assertEquals(1, g.player.getSecondHand().size());
+        for(int i = 0; i < 2; ++i)
+            g.player.addSecondHandCard(new Card(13, Suit.Spades));
+        g.doubleDownTwo();
+        String msg = "You bust";
+        assertEquals(true, msg.equals(g.userMessageTwo));
+    }
 }
