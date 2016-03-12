@@ -63,10 +63,8 @@ public abstract class Person implements Serializable {
             return rank; //2-10
         else if (rank >= 11 && rank <= 13)
             return 10; //J,Q,K
-        else if (rank == 1)
+        else //rank == 1. The old return was used for debugging/testing, no longer needed.
             return 11; //A
-
-        return -1; //error
     }
 
     protected int countCards(java.util.List<Card> hand) {

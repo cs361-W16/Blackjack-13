@@ -122,6 +122,10 @@ public class testGame {
         g.tryDeal();
         assertEquals(2,g.player.getHand().size());
 
+        g.tryDeal();
+        String msg = "You have already been dealt your initial hand";
+        assertTrue(msg.equals(g.userMessage));
+
         g.previousTie = true;
         g.tryDeal();
         assertFalse(g.previousTie);
@@ -140,14 +144,13 @@ public class testGame {
 
         g.tryDeal();
         g.tryHit();
+        //this will always bust because shuffle is out (count == 30)
         assertEquals(3,g.player.getHand().size());
 
-        if(g.userMessage.equals("You bust")){
-            assertEquals(false, g.againDisabled);
-        }
-        else{
-            assertEquals(true, g.againDisabled);
-        }
+        g.newHand();
+        g.player.addCard(new Card(2, Suit.Hearts));
+        g.tryHit();
+        assertTrue(g.dealDisabled);
     }
 
 
@@ -187,6 +190,11 @@ public class testGame {
     @Test
     public void testTryStand(){
         Game g = new Game();
+
+        g.tryStand();
+        assertTrue(g.errorFlag);
+        g.newHand();
+
         g.player.addCard(new Card(10, Suit.Hearts));
         g.dealer.addCard(new Card(10, Suit.Clubs));
         g.dealer.addCard(new Card(10, Suit.Diamonds));
@@ -253,5 +261,31 @@ public class testGame {
         g.endSecondHand("g");
         assertFalse(g.againDisabled);
         assertFalse(g.hasSplit);
+    }
+
+    @Test
+    public void testDealerTurn(){
+        Game g = new Game();
+        g.tryBet(5);
+        g.tryDeal();
+        g.tryStand();
+        String msg = "Tie! New Hand";
+        assertTrue(msg.equals(g.userMessage));
+
+        g.newHand();
+        g.player.addCard(new Card(1, Suit.Diamonds));
+        g.player.addCard(new Card(13, Suit.Clubs));
+        g.tryStand();
+        msg = "You got Blackjack!";
+        assertTrue(msg.equals(g.userMessage));
+
+        g.newHand();
+        g.player.addCard(new Card(1, Suit.Spades));
+        //on purpose for test
+        g.dealer.addCard(new Card(0, Suit.Spades));
+        g.hasSplit = true;
+        g.secondStand = true;
+        g.tryStand();
+        assertNotEquals(0, g.dealer.getHand().get(0).getValue());
     }
 }
